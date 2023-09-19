@@ -1,0 +1,17 @@
+[Unit]
+Description=Open5GS BSF Daemon
+Wants=mongodb.service mongod.service
+
+[Service]
+Type=simple
+
+User=root
+
+Restart=always
+ExecStart=/home/vagrant/open5gs/install/bin/open5gs-bsfd -c /home/vagrant/open5gs/install/etc/open5gs/bsf.yaml
+RestartSec=2
+RestartPreventExitStatus=1
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

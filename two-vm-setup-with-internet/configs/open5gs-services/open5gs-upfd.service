@@ -1,0 +1,18 @@
+[Unit]
+Description=Open5GS UPF Daemon
+After=network-online.target systemd-networkd.service
+Wants=systemd-networkd.service
+
+[Service]
+Type=simple
+
+User=root
+
+Restart=always
+ExecStart=/home/vagrant/open5gs/install/bin/open5gs-upfd -c /home/vagrant/open5gs/install/etc/open5gs/upf.yaml
+RestartSec=2
+RestartPreventExitStatus=1
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

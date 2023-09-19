@@ -13,3 +13,5 @@ _*
 ######################
 .vagran*
 proxy.sh
+*.pcapng
+*.pcap
