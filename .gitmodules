@@ -1,0 +1,6 @@
+[submodule "open5gs"]
+	path = open5gs
+	url = https://github.com/open5gs/open5gs.git
+[submodule "UERANSIM"]
+	path = UERANSIM
+	url = https://github.com/aligungr/UERANSIM.git
