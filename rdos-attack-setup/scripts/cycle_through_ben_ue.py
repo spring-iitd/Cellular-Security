@@ -8,6 +8,7 @@ import subprocess
 from copy import deepcopy
 import yaml
 import os 
+import socket
 
 def create_config(number_of_ues, pdu_session): 
     """ This function creates the individual config files for each UE.
@@ -47,9 +48,34 @@ if __name__ == "__main__":
     
     create_config(number_of_ues, pdu_session)
 
+    s = socket.socket()
+
+    # Define the port on which you want to connect
+    addr = "192.168.56.130"
+    port = 12345
+
+    # Bind the socket to the port
+    s.bind((addr, port))
+
+    # Put the socket into listening mode
+    s.listen(2)
+
+    # Establish connection with client.
+    c, addr = s.accept()
+    print('Got connection from', addr)
+    while True: 
+        # Send a message to client
+
+        time.sleep(1)
+    # Close the connection with the client
+
     for i in range(number_of_ues): 
+        c.send(b'1')
+        time.sleep(0.2)
         subprocess.run(["nr-ue -c /home/vagrant/UERANSIM/config/open5gs-ue-"+str(i+1)+".yaml > "+str(i+1)+".log &"],shell=True)
         time.sleep(delay)
         # subprocess.run(["nr-cli imsi-" + str(curr_supi + i) +" --exec 'deregister switch-off' "], shell=True)
         # subprocess.run(["sudo pkill nr-* "], shell=True)
         # time.sleep(2)
+    
+    c.close()
