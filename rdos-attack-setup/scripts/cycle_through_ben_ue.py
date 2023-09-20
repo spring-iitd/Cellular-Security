@@ -1,22 +1,22 @@
 # until killed run the following:
 #   1. start a UE
-#   2. wait for 1 second 
+#   2. wait for 1 second
 #   3. stop the UE
 import argparse
 import time
 import subprocess
 from copy import deepcopy
 import yaml
-import os 
+import os
 import socket
 
-def create_config(number_of_ues, pdu_session): 
+def create_config(number_of_ues, pdu_session):
     """ This function creates the individual config files for each UE.
     """
     base_supi = 999700000000001
     key = int("465B5CE8B199B49FAA5F0A2EE238A6BC",16)
 
-    ## changes the config on the one UE based on the pdu session value. 
+    ## changes the config on the one UE based on the pdu session value.
 
     path = "/home/vagrant/UERANSIM/config/"
 
@@ -41,11 +41,11 @@ if __name__ == "__main__":
     parser.add_argument("-n","--number-of-ues" ,  help="number of ues",type=int, default=1)
     parser.add_argument("-d","--delay" ,  help="delay between each ue",type=int, default=2)
     args = parser.parse_args()
-    
+
     pdu_session = args.pdu_session
     number_of_ues = args.number_of_ues
     delay = args.delay
-    
+
     create_config(number_of_ues, pdu_session)
 
     s = socket.socket()
@@ -58,18 +58,14 @@ if __name__ == "__main__":
     s.bind((addr, port))
 
     # Put the socket into listening mode
-    s.listen(2)
+    s.listen(1)
 
     # Establish connection with client.
     c, addr = s.accept()
     print('Got connection from', addr)
-    while True: 
-        # Send a message to client
 
-        time.sleep(1)
-    # Close the connection with the client
-
-    for i in range(number_of_ues): 
+    for i in range(number_of_ues):
+        print("starting ue",i)
         c.send(b'1')
         time.sleep(0.2)
         subprocess.run(["nr-ue -c /home/vagrant/UERANSIM/config/open5gs-ue-"+str(i+1)+".yaml > "+str(i+1)+".log &"],shell=True)
@@ -77,5 +73,5 @@ if __name__ == "__main__":
         # subprocess.run(["nr-cli imsi-" + str(curr_supi + i) +" --exec 'deregister switch-off' "], shell=True)
         # subprocess.run(["sudo pkill nr-* "], shell=True)
         # time.sleep(2)
-    
+
     c.close()
