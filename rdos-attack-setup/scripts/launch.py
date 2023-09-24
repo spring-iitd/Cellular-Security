@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
         os.system(cmd)
         x = s.recv(1024)
-        os.system("sudo pkill nr-ue")
+        os.system("sudo pkill nr-ue & wait")
         time.sleep(0.1)
 
         

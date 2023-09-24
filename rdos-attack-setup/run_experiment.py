@@ -4,13 +4,13 @@
 import argparse
 import os
 import subprocess
+from math import ceil
 
-
-def run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repeat, timeout, processes, mal_delay, count):
+def run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, mal_delay):
     subprocess.run(["vagrant up"], shell=True, check=True)
     print("Vagrant Up and Running")
 
-    str1 = "-timeout-"+str(timeout)+"-ben-"+str(ben_ues)+"-delay-"+str(ben_delay)+"-mal-"+str(mal_ues)+"-delay-"+str(mal_delay)+"-count-"+str(count) + "-repeat-"+str(repeat)
+    str1 = "-ben-"+str(ben_ues)+"-delay-"+str(ben_delay)+"-mal-"+str(mal_ues)+"-delay-"+str(mal_delay)
 
     subprocess.run(["tshark -i bridge102 -f 'port 38412' -w captured_traffic"+str1+ ".pcap &"], shell=True, check=True)
     print("Tshark Running")
@@ -31,18 +31,10 @@ def run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repea
     print("Benign UEs Running")
 
     print("Malicious UEs Running")
-    cmd = "vagrant ssh mal-ue-only -c 'sudo nohup python3 /home/vagrant/launch.py --start_imsi "+ str(start_imsi) +" --number_of_ues " + str(mal_ues) + " --attack_type " + str(attack_type) + " --repeat " + str(repeat) + " --timeout " + str(timeout) + " --processes " + str(processes) + " --delay_between " + str(mal_delay) + " > mal_call.log & wait'"    
+    # cmd = "vagrant ssh mal-ue-only -c 'sudo nohup python3 /home/vagrant/launch.py --start_imsi "+ str(start_imsi) +" --number_of_ues " + str(mal_ues) + " --attack_type " + str(attack_type) + " --repeat " + str(repeat) + " --timeout " + str(timeout) + " --processes " + str(processes) + " --delay_between " + str(mal_delay) + " > mal_call.log & wait'"    
+    cmd = "vagrant ssh mal-ue-only -c 'sudo nohup python3 /home/vagrant/launch.py --start_imsi "+ str(start_imsi) +" --number_of_ues " + str(mal_ues) + " --delay_between " + str(mal_delay) + " > mal_call.log & wait'"    
     subprocess.run([cmd], shell=True, check=True)
     print("End of Experiment Saving Logs")
-
-    # subprocess.run(["vagrant ssh open5gs -c 'sudo pkill open5gs'"], shell=True, check=True)
-    # subprocess.run(["vagrant ssh amf-only -c 'sudo pkill open5gs'"], shell=True, check=True)
-    # subprocess.run(["vagrant ssh gnb-only -c 'sudo pkill nr-gnb'"], shell=True, check=True)
-    # subprocess.run(["vagrant ssh benign-ue-only -c 'sudo pkill nr-ue'"], shell=True, check=True)
-    # subprocess.run(["vagrant ssh benign-ue-only -c 'sudo pkill python3'"], shell=True, check=True)
-    # subprocess.run(["vagrant ssh mal-ue-only -c 'sudo pkill nr-ue'"], shell=True, check=True)
-    # subprocess.run(["vagrant ssh mal-ue-only -c 'sudo pkill python3'"], shell=True, check=True)
-    # print("Killed all processes")
 
     subprocess.run(["pkill tshark"], shell=True, check=True)
     print("Killed tshark")
@@ -84,85 +76,19 @@ if __name__ == "__main__":
     # mal_delay = args.delay_between
 
     # count = args.count
-    
+
 
     pdu_session = 1
     start_imsi = 999700000000501
-    count = i = 1
-    processes = 100
-    attack_type = 1
-
-#--------------------------------------------------------------1--------------------------------------------------------------#
-    mal_ues = 25
-    mal_delay = .5
-    timeout = 700
-    ben_ues = 300
+    ben_ues = 200
+    mal_delay = 10
     ben_delay = 1
-    repeat = 1 
 
-    run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repeat, timeout, processes, mal_delay, i)
-    print("1 Done")
-#--------------------------------------------------------------!--------------------------------------------------------------#
+    mal_ues = [25,50,100,200,495]
 
-#--------------------------------------------------------------1--------------------------------------------------------------#
-    mal_ues = 20
-    mal_delay = .5
-    timeout = 700
-    ben_ues = 300
-    ben_delay = 1
-    repeat = 1 
+    for i in mal_ues: 
 
-    run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repeat, timeout, processes, mal_delay, i)
-    print("2 Done")
-#--------------------------------------------------------------!--------------------------------------------------------------#
-
-#--------------------------------------------------------------1--------------------------------------------------------------#
-    mal_ues = 15
-    mal_delay = .5
-    timeout = 700
-    ben_ues = 300
-    ben_delay = 1
-    repeat = 1 
-
-    run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repeat, timeout, processes, mal_delay, i)
-    print("3 Done")
-#--------------------------------------------------------------!--------------------------------------------------------------#
-
-#--------------------------------------------------------------1--------------------------------------------------------------#
-    mal_ues = 10
-    mal_delay = .5
-    timeout = 700
-    ben_ues = 300
-    ben_delay = 1
-    repeat = 1 
-
-    run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repeat, timeout, processes, mal_delay, i)
-    print("4 Done")
-#--------------------------------------------------------------!--------------------------------------------------------------#
-
-#--------------------------------------------------------------1--------------------------------------------------------------#
-    mal_ues = 5
-    mal_delay = .5
-    timeout = 700
-    ben_ues = 300
-    ben_delay = 1
-    repeat = 1 
-
-    run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repeat, timeout, processes, mal_delay, i)
-    print("5 Done")
-#--------------------------------------------------------------!--------------------------------------------------------------#
-
-#--------------------------------------------------------------1--------------------------------------------------------------#
-    mal_ues = 0
-    mal_delay = .5
-    timeout = 700
-    ben_ues = 300
-    ben_delay = 1
-    repeat = 1 
-
-    run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, attack_type, repeat, timeout, processes, mal_delay, i)
-    print("6 Done")
-#--------------------------------------------------------------!--------------------------------------------------------------#
-
+        run(pdu_session, ben_ues, ben_delay, start_imsi, i, mal_delay)
+        print(i,"completed")
 
     print("Done")

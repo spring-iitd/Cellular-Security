@@ -67,11 +67,8 @@ if __name__ == "__main__":
     for i in range(number_of_ues):
         print("starting ue",i)
         c.send(b'1')
-        time.sleep(0.2)
+        time.sleep(0.05)
         subprocess.run(["nr-ue -c /home/vagrant/UERANSIM/config/open5gs-ue-"+str(i+1)+".yaml > "+str(i+1)+".log &"],shell=True)
         time.sleep(delay)
-        # subprocess.run(["nr-cli imsi-" + str(curr_supi + i) +" --exec 'deregister switch-off' "], shell=True)
-        # subprocess.run(["sudo pkill nr-* "], shell=True)
-        # time.sleep(2)
 
     c.close()
