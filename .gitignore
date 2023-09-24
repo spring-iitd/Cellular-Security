@@ -16,3 +16,6 @@ proxy.sh
 *.pcapng
 *.pcap
 try*
+*.csv
+*.log
+*.xlsx*
