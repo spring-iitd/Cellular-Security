@@ -39,7 +39,7 @@ def run(pdu_session, ben_ues, ben_delay, start_imsi, mal_ues, mal_delay):
     subprocess.run(["pkill tshark"], shell=True, check=True)
     print("Killed tshark")
     print("Halting vagrant")
-    subprocess.run(["vagrant halt"], shell=True, check=True)
+    subprocess.run(["vagrant halt -f"], shell=True, check=True)
 
 
 if __name__ == "__main__": 
@@ -81,13 +81,15 @@ if __name__ == "__main__":
     pdu_session = 1
     start_imsi = 999700000000501
     ben_ues = 200
-    mal_delay = 10
-    ben_delay = 1
+    ben_delay = 2
 
-    mal_ues = [25,50,100,200,495]
+    mal_ues = [0, 10, 25, 50, 100, 200, 500, 750, 1000]
 
     for i in mal_ues: 
-
+        if i == 0:
+            mal_delay = 0
+        else: 
+            mal_delay = ceil((ben_delay*1000)/i)
         run(pdu_session, ben_ues, ben_delay, start_imsi, i, mal_delay)
         print(i,"completed")
 

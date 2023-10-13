@@ -189,7 +189,12 @@ if __name__ == "__main__":
     display_filter = {"ben":"(ip.src==192.168.56.120 or ip.dst==192.168.56.120) and ngap.RAN_UE_NGAP_ID"}
     attack_type = 1
     # to_run = ["captured_traffic-timeout-700-ben-300-delay-1-mal-25-delay-05-count-1-repeat-1.pcap", "captured_traffic-timeout-700-ben-300-delay-1-mal-20-delay-05-count-1-repeat-1.pcap", "captured_traffic-timeout-700-ben-300-delay-1-mal-15-delay-05-count-1-repeat-1.pcap" , "captured_traffic-timeout-700-ben-300-delay-1-mal-10-delay-05-count-1-repeat-1.pcap"]
-    to_run = ["captured_traffic-timeout-700-ben-300-delay-1-mal-0-delay-05-count-1-repeat-1.pcap"]
+    # to_run = ["captured_traffic-timeout-700-ben-300-delay-1-mal-0-delay-05-count-1-repeat-1.pcap"]
+    to_run = ["captured_traffic-ben-200-delay-2-mal-0-delay-0.pcap","captured_traffic-ben-200-delay-2-mal-10-delay-200.pcap",
+              "captured_traffic-ben-200-delay-2-mal-100-delay-20.pcap","captured_traffic-ben-200-delay-2-mal-200-delay-10.pcap",
+              "captured_traffic-ben-200-delay-2-mal-25-delay-80.pcap", "captured_traffic-ben-200-delay-2-mal-50-delay-40.pcap",
+              "captured_traffic-ben-200-delay-2-mal-500-delay-4.pcap","captured_traffic-ben-200-delay-2-mal-750-delay-3.pcap",
+              "captured_traffic-ben-200-delay-2-mal-1000-delay-2.pcap"]
     # x = ["reg_ben1_captured_traffic-timeout-700-ben-300-delay-1-mal-20-delay-05-count-1-repeat-1.csv", "reg_ben1_captured_traffic-timeout-700-ben-300-delay-1-mal-25-delay-05-count-1-repeat-1.csv"]
     for file in to_run: 
         l = do_analysis(file, display_filter, attack_type)
