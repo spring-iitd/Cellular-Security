@@ -472,16 +472,12 @@ sbi:
 #
 amf:
     sbi:
-      - addr: 192.168.56.102
+      - addr: 192.168.56.100
         port: 7800
     ngap:
-<<<<<<< HEAD:two-vm-setup-with-internet/configs/open5gs-config/open5gs/amf.yaml
       - addr: 192.168.56.100
-=======
-      - addr: 192.168.56.102
->>>>>>> registration-based-dos-attack:vagrant-box/configs/open5gs-config/open5gs/amf.yaml
     metrics:
-      - addr: 192.168.56.102
+      - addr: 192.168.56.100
         port: 9091
     guami:
       - plmn_id:

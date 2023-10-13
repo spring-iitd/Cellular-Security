@@ -197,17 +197,13 @@ logger:
 #
 upf:
     pfcp:
-      - addr: 192.168.56.101
-    gtpu:
-<<<<<<< HEAD:two-vm-setup-with-internet/configs/open5gs-config/open5gs/upf.yaml
       - addr: 192.168.56.100
-=======
-      - addr: 192.168.56.101
->>>>>>> registration-based-dos-attack:vagrant-box/configs/open5gs-config/open5gs/upf.yaml
+    gtpu:
+      - addr: 192.168.56.100
     subnet:
       - addr: 10.45.0.1/16
     metrics:
-      - addr: 192.168.56.101
+      - addr: 192.168.56.100
         port: 9094
 
 #
