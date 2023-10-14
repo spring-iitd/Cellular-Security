@@ -23,7 +23,7 @@ You can install vagrant using homebrew and the following command:
 ### Clone this repository 
 - Please install git and clone this repository. 
   ```shell
-  $ git clone --recurse-submodules https://github.com/spg-iitd/5G-and-Beyond.git 
+  $ git clone --recurse-submodules https://github.com/spg-iitd/Cellular-Security.git
   ```
 - If you have already cloned the repository, you can run the following command to update the submodules:
   ```shell
