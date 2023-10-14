@@ -11,11 +11,7 @@ gtpIp: 192.168.56.120    # gNB's local IP address for N3 Interface (Usually same
 
 # List of AMF address information
 amfConfigs:
-<<<<<<< HEAD:two-vm-setup-with-internet/configs/ueransim-config/open5gs-gnb.yaml
   - address: 192.168.56.100
-=======
-  - address: 192.168.56.102
->>>>>>> registration-based-dos-attack:vagrant-box/configs/ueransim-config/open5gs-gnb.yaml
     port: 38412
 
 # List of supported S-NSSAIs by this gNB
