@@ -22,7 +22,6 @@ db_uri: mongodb://localhost/open5gs
 #    domain: core,sbi,ausf,event,tlv,mem,sock
 #
 logger:
-    # level: debug
     file: /home/vagrant/open5gs/install/var/log/open5gs/udr.log
 
 #
@@ -257,8 +256,8 @@ sbi:
 #
 udr:
     sbi:
-      - addr: 192.168.56.100
-        port: 7806
+      - addr: 127.0.0.20
+        port: 7777
 
 #
 #  <SBI Client>>
@@ -326,8 +325,8 @@ udr:
 #
 scp:
     sbi:
-      - addr: 192.168.56.100
-        port: 7810
+      - addr: 127.0.1.10
+        port: 7777
 
 #
 #  <SBI Client>>
@@ -388,11 +387,12 @@ scp:
 #          l_onoff: true
 #          l_linger: 10
 #
-nrf:
-   sbi:
-     - addr:
-         - 192.168.56.100
-       port: 7820
+#nrf:
+#    sbi:
+#      - addr:
+#          - 127.0.0.10
+#          - ::1
+#        port: 7777
 
 #
 #  o Disable use of IPv4 addresses (only IPv6)

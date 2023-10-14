@@ -20,7 +20,6 @@
 #    domain: core,sbi,ausf,event,tlv,mem,sock
 #
 logger:
-    # level: debug
     file: /home/vagrant/open5gs/install/var/log/open5gs/amf.log
 
 #
@@ -472,13 +471,13 @@ sbi:
 #
 amf:
     sbi:
-      - addr: 192.168.56.100
-        port: 7800
+      - addr: 127.0.0.5
+        port: 7777
     ngap:
       - addr: 192.168.56.100
     metrics:
-      - addr: 192.168.56.100
-        port: 9091
+      - addr: 127.0.0.5
+        port: 9090
     guami:
       - plmn_id:
           mcc: 999
@@ -570,8 +569,8 @@ amf:
 #
 scp:
     sbi:
-      - addr: 192.168.56.100
-        port: 7810
+      - addr: 127.0.1.10
+        port: 7777
 
 #
 #  <SBI Client>>
@@ -632,11 +631,12 @@ scp:
 #          l_onoff: true
 #          l_linger: 10
 #
-nrf:
-   sbi:
-     - addr:
-         - 192.168.56.100
-       port: 7820
+#nrf:
+#    sbi:
+#      - addr:
+#          - 127.0.0.10
+#          - ::1
+#        port: 7777
 
 #
 #  o Disable use of IPv4 addresses (only IPv6)

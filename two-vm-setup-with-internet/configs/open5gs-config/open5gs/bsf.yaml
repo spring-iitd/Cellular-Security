@@ -20,7 +20,6 @@
 #    domain: core,sbi,ausf,event,tlv,mem,sock
 #
 logger:
-    # level: debug
     file: /home/vagrant/open5gs/install/var/log/open5gs/bsf.log
 
 #
@@ -254,8 +253,8 @@ sbi:
 #
 bsf:
     sbi:
-      - addr: 192.168.56.100
-        port: 7802
+      - addr: 127.0.0.15
+        port: 7777
 
 #
 #  <SBI Client>>
@@ -323,8 +322,8 @@ bsf:
 #
 scp:
     sbi:
-      - addr: 192.168.56.100
-        port: 7810
+      - addr: 127.0.1.10
+        port: 7777
 
 #
 #  <SBI Client>>
@@ -385,11 +384,12 @@ scp:
 #          l_onoff: true
 #          l_linger: 10
 #
-nrf:
-   sbi:
-     - addr:
-         - 192.168.56.100
-       port: 7820
+#nrf:
+#    sbi:
+#      - addr:
+#          - 127.0.0.10
+#          - ::1
+#        port: 7777
 
 #
 #  o Disable use of IPv4 addresses (only IPv6)

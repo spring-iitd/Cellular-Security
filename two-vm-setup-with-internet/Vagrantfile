@@ -138,12 +138,12 @@ Vagrant.configure("2") do |config|
       echo "---------Compiling UERANSIM--------"
       sudo cp -r /LoadUeransim/ /home/vagrant/UERANSIM/
       cd /home/vagrant/UERANSIM
-      make
+      sudo make
       cd /home/vagrant/
       echo "---------UERANSIM Compiled--------"
 
       echo "------- Modify the gNB & UE configuration files  -------"
-      sudo cp -r /configs/ueransim-config/* /home/vagrant/UERANSIM/config/
+      sudo cp -r /vagrant/configs/ueransim-config/* /home/vagrant/UERANSIM/config/
 
       SHELL
 

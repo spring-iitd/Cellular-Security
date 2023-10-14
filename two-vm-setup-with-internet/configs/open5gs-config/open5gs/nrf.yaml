@@ -20,7 +20,6 @@
 #    domain: core,sbi,ausf,event,tlv,mem,sock
 #
 logger:
-    # level: debug
     file: /home/vagrant/open5gs/install/var/log/open5gs/nrf.log
 
 #
@@ -192,8 +191,9 @@ sbi:
 nrf:
     sbi:
       - addr:
-        - 192.168.56.100
-        port: 7820
+        - 127.0.0.10
+        - ::1
+        port: 7777
 
 #
 #  <SBI Client>>
@@ -261,8 +261,8 @@ nrf:
 #
 scp:
     sbi:
-      - addr: 192.168.56.100
-        port: 7810
+      - addr: 127.0.1.10
+        port: 7777
 
 
 #

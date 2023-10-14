@@ -20,7 +20,6 @@
 #    domain: core,sbi,ausf,event,tlv,mem,sock
 #
 logger:
-    # level: debug
     file: /home/vagrant/open5gs/install/var/log/open5gs/smf.log
 
 #
@@ -600,22 +599,28 @@ sbi:
 #
 smf:
     sbi:
-      - addr: 192.168.56.100
-        port: 7805
+      - addr: 127.0.0.4
+        port: 7777
     pfcp:
-      - addr: 192.168.56.100
+      - addr: 127.0.0.4
+      - addr: ::1
     gtpc:
-      - addr: 192.168.56.100
+      - addr: 127.0.0.4
+      - addr: ::1
     gtpu:
-      - addr: 192.168.56.100
+      - addr: 127.0.0.4
+      - addr: ::1
     metrics:
-      - addr: 192.168.56.100
-        port: 9093
+      - addr: 127.0.0.4
+        port: 9090
     subnet:
       - addr: 10.45.0.1/16
+      - addr: 2001:db8:cafe::1/48
     dns:
       - 8.8.8.8
       - 8.8.4.4
+      - 2001:4860:4860::8888
+      - 2001:4860:4860::8844
     mtu: 1400
     ctf:
       enabled: auto
@@ -687,8 +692,8 @@ smf:
 #
 scp:
     sbi:
-      - addr: 192.168.56.100
-        port: 7810
+      - addr: 127.0.1.10
+        port: 7777
 
 #
 #  <SBI Client>>
@@ -749,11 +754,12 @@ scp:
 #          l_onoff: true
 #          l_linger: 10
 #
-nrf:
-   sbi:
-     - addr:
-         - 192.168.56.100
-       port: 7820
+#nrf:
+#    sbi:
+#      - addr:
+#          - 127.0.0.10
+#          - ::1
+#        port: 7777
 
 #
 #  <PFCP Client>>
@@ -802,8 +808,8 @@ nrf:
 #
 upf:
     pfcp:
-      - addr: 192.168.56.100
-        port: 8585
+      - addr: 127.0.0.7
+
 #
 #  o Disable use of IPv4 addresses (only IPv6)
 #  parameter:
