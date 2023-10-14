@@ -803,6 +803,7 @@ nrf:
 upf:
     pfcp:
       - addr: 192.168.56.100
+        port: 8585
 #
 #  o Disable use of IPv4 addresses (only IPv6)
 #  parameter:
