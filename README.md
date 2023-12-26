@@ -77,4 +77,5 @@ curl --interface uesimtun0 -X GET "https://httpbin.org/get"
 ## References 
 1. https://github.com/eatsan/open5gs-ueransim-vagrant-config
 2. https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
+3. In case of an SCTP error, set the NatNetwork address in the Oracle VM box(/tools/network) to 192.168.56.0/24. Then for both VMs select the network attached to  'NAT network' and promiscuous mode to 'allow all '
 
