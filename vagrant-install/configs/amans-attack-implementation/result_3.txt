@@ -1,0 +1,61 @@
+Starting the experiment...... 
+Sending reuquest from benign UE Case 1
+Time taken in request 1 - 297.0
+Sending reuquest from benign UE Case 2
+Time taken in request 2 - 274.0
+Sending reuquest from benign UE Case 3
+Time taken in request 3 - 263.0
+Sending reuquest from benign UE Case 4
+Time taken in request 4 - 286.0
+Sending reuquest from benign UE Case 5
+Time taken in request 5 - 283.0
+Starting attack script 1
+Sending reuquest from benign UE Case 1
+Time taken in request 1 - 375.0
+Sending reuquest from benign UE Case 2
+Time taken in request 2 - 2800.0
+Sending reuquest from benign UE Case 3
+Time taken in request 3 - 243.0
+Sending reuquest from benign UE Case 4
+Time taken in request 4 - 497.0
+Sending reuquest from benign UE Case 5
+Time taken in request 5 - 89.0
+Starting attack script 2
+Sending reuquest from benign UE Case 1
+Time taken in request 1 - 342.0
+Sending reuquest from benign UE Case 2
+Time taken in request 2 - 232.0
+Sending reuquest from benign UE Case 3
+Time taken in request 3 - 2692.0
+Sending reuquest from benign UE Case 4
+Time taken in request 4 - 207.0
+Sending reuquest from benign UE Case 5
+Time taken in request 5 - 186.0
+Starting attack script 3
+Sending reuquest from benign UE Case 1
+Time taken in request 1 - 279.0
+Sending reuquest from benign UE Case 2
+Time taken in request 2 - 409.0
+Sending reuquest from benign UE Case 3
+Time taken in request 3 - 360.0
+Sending reuquest from benign UE Case 4
+Time taken in request 4 - 318.0
+Sending reuquest from benign UE Case 5
+Time taken in request 5 - 2748.0
+Starting attack script 4
+Sending reuquest from benign UE Case 1
+Time taken in request 1 - 260.0
+Sending reuquest from benign UE Case 2
+Time taken in request 2 - 233.0
+Sending reuquest from benign UE Case 3
+Time taken in request 3 - 0.0
+Sending reuquest from benign UE Case 4
+Time taken in request 4 - 0.0
+Sending reuquest from benign UE Case 5
+Time taken in request 5 - 0.0
+Starting attack script 5
+Sending reuquest from benign UE Case 1
+Time taken in request 1 - 0.0
+Sending reuquest from benign UE Case 2
+Time taken in request 2 - 0.0
+Sending reuquest from benign UE Case 3
