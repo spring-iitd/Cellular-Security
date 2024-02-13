@@ -14,9 +14,16 @@ Vagrant.configure("2") do |config|
   config.vm.define "ueransim" do |ueransim|
     ueransim.vm.box = "priyanshsingh/UERANSIM"
     ueransim.vm.network "private_network", ip: UERANSIM_IPv4_ADDR
+    
     ueransim.vm.provider :virtualbox do |vb|
       vb.memory = VM_RAM
       vb.cpus = VM_CPU
     end
+
+    ueransim.vm.provider :parallels do |vb|
+      vb.memory = VM_RAM
+      vb.cpus = VM_CPU
+    end
+
   end
 end
