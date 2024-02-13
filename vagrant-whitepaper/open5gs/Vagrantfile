@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+OPEN5GS_IPv4_ADDR = "192.168.56.100"
+VM_RAM = "512"
+VM_CPU = "1"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "priyanshsingh/open5gs"
+  config.vm.define "open5gs" do |open5gs|
+    open5gs.vm.box = "priyanshsingh/open5gs"
+    open5gs.vm.network "private_network", ip: OPEN5GS_IPv4_ADDR
+    open5gs.vm.provider :virtualbox do |vb|
+      vb.memory = VM_RAM
+      vb.cpus = VM_CPU
+    end
+    config.trigger.after :up do |trigger|
+      trigger.name = "Finished Message"
+      trigger.info = "Machine is up!"
+      config.vm.provision :shell, :run => 'always', :privileged => true, inline: <<-SHELL
+        # This script will run everytime that the system bootsup 
+        echo "--- Adding a route for the UE to have WAN connectivity over SGi/N6 -------"
+        sudo sh /home/vagrant/open5gs/misc/netconf.sh
+        ### Enable IPv4/IPv6 Forwarding
+        sudo sysctl -w net.ipv4.ip_forward=1
+        sudo sysctl -w net.ipv6.conf.all.forwarding=1
+        ### Add NAT Rule
+        sudo iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
+        sudo ip6tables -t nat -A POSTROUTING -s 2001:db8:cafe::/48 ! -o ogstun -j MASQUERADE
+      SHELL
+    end
+  end 
+end
