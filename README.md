@@ -1,5 +1,7 @@
 # 5G-and-Beyond
+
 This repository was made to help us decease the time it takes for us to setup a 5G core network. 
+
 ---
 
 ## Task 1: Steps to Install 
