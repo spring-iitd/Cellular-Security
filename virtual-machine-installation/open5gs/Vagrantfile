@@ -4,14 +4,20 @@
 OPEN5GS_IPv4_ADDR = "192.168.56.100"
 VM_RAM = "5120"
 VM_CPU = "4"
+VM_NAME = "open5gs"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "priyanshsingh/open5gs"
+  config.vm.synced_folder "../shared", "/home/vagrant/shared"
+  config.vm.box_check_update = true
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  
   config.vm.define "open5gs" do |open5gs|
-    open5gs.vm.box = "priyanshsingh/open5gs"
-    open5gs.vm.network "private_network", ip: OPEN5GS_IPv4_ADDR
+
+    open5gs.vm.network "public_network", ip: OPEN5GS_IPv4_ADDR
 
     open5gs.vm.provider :virtualbox do |vb|
+      vb.name = VM_NAME
       vb.memory = VM_RAM
       vb.cpus = VM_CPU
     end
