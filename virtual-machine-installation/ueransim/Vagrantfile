@@ -15,7 +15,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "ueransim" do |ueransim|
     ueransim.vm.box = "priyanshsingh/UERANSIM"
     ueransim.vm.network "public_network", ip: UERANSIM_IPv4_ADDR
-    
+    ueransim.vm.network :forwarded_port, guest: 5901, host: 5921
+
     ueransim.vm.provider :virtualbox do |vb|
       vb.name = VM_NAME
       vb.memory = VM_RAM
