@@ -39,5 +39,5 @@ Environment="HTTPS_PROXY=http://proxy62.iitd.ac.in:3128"
  
 ```
 > D. Run the original command again
->
-> ### 3. On your default browser visit the localhost:3000 to find the browser and run applications while capturing it in pcap files
+
+### 3. On your default browser visit the localhost:3000 to find the browser and run applications while capturing it in pcap files
