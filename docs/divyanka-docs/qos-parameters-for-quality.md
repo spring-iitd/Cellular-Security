@@ -2,7 +2,7 @@ TODO: Add images, add references to other related guides when completed
 
 QoS parameters can be manipulated to achieve desired service qualities for different users or services. This document provides an overview of these parameters, their implications, and guides on how to adjust them within the Open5GS framework.
 
-### **Quality of Service (QoS) Parameters in 5G Networks**
+# **Quality of Service (QoS) Parameters in 5G Networks**
 
 QoS in 5G networks is essential for ensuring that various applications and services receive the network resources they require to function optimally, according to their specific needs. Key QoS parameters that can be configured include:
 
@@ -28,14 +28,14 @@ QoS in 5G networks is essential for ensuring that various applications and servi
 - **Configuration Options**: Specified in bits per second (bps), allowing administrators to set limits based on the user's subscription or service plan.
 - **Impact on Services**: Influences the overall user experience by limiting the aggregate throughput available to a user's services, which is crucial for bandwidth management across multiple services.
 
-### **Configuring QoS Parameters in Open5GS**
+## **Configuring QoS Parameters in Open5GS**
 
-#### **Prerequisites:**
+### **Prerequisites:**
 
 - Ensure Open5GS and UERANSIM are correctly installed and configured.
 - Familiarize yourself with the Open5GS WebUI for managing subscribers and QoS profiles.
 
-#### **Step-by-Step Guide:**
+### **Step-by-Step Guide:**
 
 1. **Access the Open5GS WebUI:**
    - Navigate to the Open5GS WebUI through your web browser. The URL typically is `http://localhost:3000` (or http://localhost:9999 according to our guide).
@@ -65,7 +65,7 @@ QoS in 5G networks is essential for ensuring that various applications and servi
    - Monitor the performance and QoS treatment using Open5GS's logging and monitoring tools.
 
 
-### **Example Scenario Setup**
+## **Example Scenario Setup**
 
 1. **VoIP Service Subscriber (High Priority, Low Latency)**
    - **5QI**: For VoIP, a low latency and guaranteed bit rate are required, typically associated with a 5QI value of 1 (GBR, low latency).
@@ -77,7 +77,7 @@ QoS in 5G networks is essential for ensuring that various applications and servi
    - **ARP**: Standard priority. We'll use an ARP level of 9, with both pre-emption capability and vulnerability set to pre-emptable.
    - **UE AMBR**: Set to 5 Mbps to allow for a decent browsing experience without allocating excessive network resources.
 
-#### **VoIP Service Configuration**
+### **VoIP Service Configuration**
 1. Open Open5GS WebUI.
 2. Navigate to the `Subscribers` section in the Open5GS WebUI.
 3. Click on `Add Subscriber` to create a new subscriber or select an existing subscriber to modify.
@@ -89,7 +89,7 @@ QoS in 5G networks is essential for ensuring that various applications and servi
    - **UE AMBR (Uplink and Downlink)**: Set both to `128 Kbps`.
    - Click `Save`.
 
-#### **Web Browsing Configuration**
+### **Web Browsing Configuration**
 
 5. Follow the same steps to add or select another subscriber for web browsing:
    - **5QI**: Enter `9` for non-GBR with standard delay.
