@@ -309,7 +309,7 @@ Let all the other configuration be the default configuration.
 ## 8. Test 5G Network
 
 1. **Internet Access**: Now, use proxy configuation again and add internet access to the UERANSIM VM:  [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf). Test it out using `wget google.com` or `ping google.com`.
-2. **Run UERANSIM**: On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the core network and the specified slices are being used.
+2. **Run UERANSIM**: On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the core network.
 
    - Start gNB: `./nr-gnb -c ../config/open5gs-gnb.yaml`
    - Start UE: `./nr-ue -c ../config/open5gs-ue.yaml`
@@ -322,3 +322,4 @@ If it runs, we have been successful!
 
 -------
 ***Author**: Divyanka Chaudhari (2019CS50429)*
+Please let me know if there can be any modification/addition or just create a pull request.
