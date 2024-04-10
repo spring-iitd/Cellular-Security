@@ -111,8 +111,4 @@ QoS in 5G networks is essential for ensuring that various applications and servi
 
 We have successfully configured two different QoS profiles for VoIP and web browsing services in Open5GS. These configurations demonstrate how to prioritize critical services like voice calls over standard data services, ensuring an optimal user experience even under varying network conditions.
 
--------
-
-***Author:** Divyanka Chaudhari (2019CS50429)*
-
 
