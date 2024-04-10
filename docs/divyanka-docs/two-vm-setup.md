@@ -6,6 +6,9 @@ Make sure you have access to Whitepaper (IITD Lab Machine) before doing this. Yo
 ssh <your_username>@<whitepaperIP>
 ```
 
+Before this, make sure you have internet access in the machine, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
+Test it out using `wget google.com` or `ping google.com`.
+
 Clone the existing IITD Cellular Security Repo:
 ```bash
 git clone https://github.com/spg-iitd/Cellular-Security/tree/main
