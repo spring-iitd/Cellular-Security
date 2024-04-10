@@ -1,6 +1,10 @@
 # Two VM Setup - Open5GS and UERANSIM
 
 ## 1. Installation and Configuration of the Cellular-Security Repository
+Make sure you have access to Whitepaper (IITD Lab Machine) before doing this. You need to be on the IITD network. SSH into the lab machine:
+```bash
+ssh <your_username>@<whitepaperIP>
+```
 
 Clone the existing IITD Cellular Security Repo:
 ```bash
@@ -17,7 +21,7 @@ Open `Vagrantfile` in the `open5gs` folder and note the port speicified in your 
 ```yaml
 open5gs.vm.network "forwarded_port", guest: 9999, host: 9999
 ```
-Now, exit, open a new terminal and use the following command to ssh into your IITD Lab machine, or Whitepaper:
+Now, exit the SSH, open a new terminal and use the following command to ssh into your IITD Lab machine, or Whitepaper:
 ```
 ssh -L 9999:localhost:9999 divyanka@10.237.27.48
 ```
