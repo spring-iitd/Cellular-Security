@@ -41,7 +41,7 @@ sudo ./open5gs-amfd &
 
 ### Step 3: Configure UERANSIM for Network Slicing
 
-1. **UE Configuration**: Edit the UERANSIM UE configuration file to include the desired slice. This file is typically named `ue.yaml`. We can create a copy of `ue.yaml` and then edit those copies. Let's call the first copy `ue1_internet.yaml`. Create a copy using `cp ue.yaml ue1_internet.yaml`. Now open `ue1_internet.yaml`. You need to specify the `sst` for the slice in the `sessions` section:
+1. **UE Configuration**: Edit the UERANSIM UE configuration file to include the desired slice. This file is typically named `ue.yaml`. We can create a copy of `ue.yaml` and then edit those copies. Let's call the first copy `ue1_internet.yaml`. Create a copy using `cp open5gs-ue.yaml ue1_internet.yaml`. Now open `ue1_internet.yaml`. You need to specify the `sst` for the slice in the `sessions` section:
 
    ```yaml
    supi: 999705210000011
@@ -64,7 +64,7 @@ Similarly, modify `ue2_iot.yaml`, `ue3_edge.yaml` and `ue4_yourownslice.yaml` wi
 2. **Run UERANSIM**: On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the core network and the specified slices are being used.
 
    - Start gNB: `./nr-gnb -c ../config/open5gs-gnb.yaml`
-   - Start UE: `./nr-ue -c ../config/open5gs-ue.yaml`
+   - Start UE: `./nr-ue -c ../config/ue1_internet.yaml`, `./nr-ue -c ../config/ue2_iot.yaml`, `./nr-ue -c ../config/ue3_edge.yaml` and  `./nr-ue -c ../config/ue4_yourownslice.yaml`
   
  3. **Look at the Logs**: Check the logs of both Open5GS and UERANSIM, find log entries with `DNN[internet]`, `DNN[iot]`, `DNN[yourownslice]`, etc. 
  4. **Check connectivity**: Run `ip` and you'll see `uesimtun0` to `uesimtun3` because we have created a total of 4 slices. We can check if these work by `ping -I uesimtun0 google.com`. Instead of `uesimton0`, put others and check. If this works, we've been successful!
