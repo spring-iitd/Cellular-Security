@@ -110,7 +110,7 @@ sudo ip addr add 2001:230:cafe::1/48 dev ogstun
 sudo ip link set ogstun up
 ```
 
-## 4. Start the Open5GS services one-by-one
+## 4. Install dependencies and disable proxy
 
 Before this, make sure you have internet access in the VM, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
 Test it out using `wget google.com` or `ping google.com`.
@@ -124,6 +124,18 @@ sudo apt install curl
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install nodejs
 ```
+Now `cd` into the following folder and
+``` bash
+vagrant@ubuntu2204:~/open5gs/webui$
+```
+and run these commands
+
+```
+cd webui
+npm install
+npm audit fix
+
+```
 We're done with internet use in the Open5GS VM. *Disable* firewall:
 
 ```bash
@@ -132,6 +144,7 @@ sudo ufw disable
 
 Now, after this, *DISABLE* IITD proxy. Comment out anything you added in `.bashrc` (if you did) and login again. Logout of your open5GS VM, and `vagrant reload` and `vagrant ssh`. Make sure `ping google.com` *doesn't* run.
 
+## 5. Start the Open5GS services one-by-one
 Start the following commands one by one (line by line) and see if you get error at any point.
 
 ```bash
@@ -178,7 +191,7 @@ Now, I got an error while running `sudo ./open5gs-pcfd & `
 **Resolve the error:** Disable proxy as mentioned earlier.
 
 
-## 5. Register UE Device on Open5GS WebUI
+## 6. Register UE Device on Open5GS WebUI
 
 ### Understanding Port Fowarding between Whitepaper and Your machine
 **Here's the tricky part:** since we're are ssh-ing twice (one into the whitepaper and then into vagrant), it becomes difficult for us to forward ports. We have to do it twice. 
@@ -202,8 +215,6 @@ Now, in that folder,
 
 # run webui with npm
 cd webui
-npm install
-npm audit fix
 
 
 npm run dev --host 0.0.0.0
@@ -225,7 +236,7 @@ Operator Key: E8ED289DEBA952E4283B54E88E6183CA
 
 ```
 
-## 6. Setup gNB and UE
+## 7. Setup gNB and UE
 
 Now, go to your other terminal with UERANSIM VM:
 ```bash
@@ -292,7 +303,7 @@ gnbSearchList:
 
 Let all the other configuration be the default configuration.
 
-## 7. Test 5G Network
+## 8. Test 5G Network
 
 1. **Internet Access**: Now, use proxy configuation again and add internet access to the UERANSIM VM:  [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf). Test it out using `wget google.com` or `ping google.com`.
 2. **Run UERANSIM**: On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the core network and the specified slices are being used.
