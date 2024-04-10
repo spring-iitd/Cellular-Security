@@ -4,6 +4,8 @@ TODO: Add images, add references to other related guides when completed
 
 Network slicing is a fundamental technology in 5G networks that enables multiple logical networks to be created on top of a common physical infrastructure. This is crucial for meeting the diverse requirements of various applications, such as enhanced mobile broadband (eMBB), massive machine-type communications (mMTC), and ultra-reliable and low-latency communications (URLLC).
 
+If you're not familiar with Network Slicing, please google and learn a bit more about what it is and why it is used. In this guide, we will try to implement Network Slicing on our 5G core network using the open5GS and UERANSIM (two VM) setup. Ensure that you have the two VM setup in place. 
+
 ### Reference
 We're referring to [this video](https://youtu.be/8QDQNAAgtiQ?si=O0vUf4TeorvW1c2l), you can have a look at it if you want. However, I have tailored this article to work with the 2 VM setup that our research group at IITD is using. 
 
@@ -31,7 +33,7 @@ sudo ./open5gs-upfd &
 sudo ./open5gs-amfd & 
 
 ```
-2. **Open the WebUI to add subscribers:** From our initial configuration, we know that our `mcc: 999` and `mnc: 70` so our IMSI number will always follow the format <mcc><mnc><rest>. So, let's add subscribers with the following information, when not mentioned, use default settings:
+2. **Open the WebUI to add subscribers:** From our initial configuration, we know that our `mcc: 999` and `mnc: 70` so our IMSI number will always follow the format <mcc><mnc><identifier>. So, let's add subscribers with the following information, when not mentioned, use default settings:
 	1. `IMSI: 999705210000011`, `DNN/APN: internet`
 	2. `IMSI: 999705210000021`, `DNN/APN: iot`
 	3. `IMSI: 999705210000031`, `DNN/APN: edge`
@@ -39,7 +41,7 @@ sudo ./open5gs-amfd &
 
 ### Step 3: Configure UERANSIM for Network Slicing
 
-1. **UE Configuration**: Edit the UERANSIM UE configuration file to include the desired slice. This file is typically named `ue.yaml`. We can create a copy of `ue.yaml` and then edit those copies. Let's call the first copy `ue1_internet.yaml`. Create a copy using `cp ue.yaml ue1_internet.yaml`. Now open `ue1_internet.yaml`. You need to specify the `sst` and `sd` for the slice in the `sessions` section:
+1. **UE Configuration**: Edit the UERANSIM UE configuration file to include the desired slice. This file is typically named `ue.yaml`. We can create a copy of `ue.yaml` and then edit those copies. Let's call the first copy `ue1_internet.yaml`. Create a copy using `cp ue.yaml ue1_internet.yaml`. Now open `ue1_internet.yaml`. You need to specify the `sst` for the slice in the `sessions` section:
 
    ```yaml
    supi: 999705210000011
