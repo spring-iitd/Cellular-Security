@@ -31,6 +31,8 @@ Open `Vagrantfile` in the `open5gs` folder and note the port speicified in your 
 ```yaml
 open5gs.vm.network "forwarded_port", guest: 9999, host: 9999
 ```
+This means that we're forwarding port `guest` from our vagrant machine to port `host` on the machine on which we're running vagrant, which is whitepaper.
+
 Now, exit the SSH, open a new terminal and use the following command to ssh into your IITD Lab machine, or Whitepaper:
 ```
 ssh -L 9999:localhost:9999 divyanka@10.237.27.48
@@ -360,6 +362,25 @@ curl --interface uesimtun0 -X GET "https://httpbin.org/get"
 ```
 
 If it runs, we have been successful!
+
+
+## Frequently Encountered Problems
+### Unable to open WebUI on Port 9999
+Open `Vagrantfile` in the `open5gs` folder and note the port speicified in your open5GS vagrant file infront of `host` in the following line (if the line doesn't exist, add it at the appropirate location):
+
+```yaml
+open5gs.vm.network "forwarded_port", guest: 9999, host: 1234
+```
+
+Now, while ssh-ing into whitepaper, use 
+```
+ssh -L 1234:localhost:1234 divyanka@10.237.27.48
+```
+
+On the whitepaper and open5GS machine, do `sudo ufw disable` and `sudo iptables -F`. Make sure that everything related to proxy is disabled.
+
+Your webui will be on `0.0.0.0:1234`. 
+
 
 -------
 ***Author**: Divyanka Chaudhari (2019CS50429)*
