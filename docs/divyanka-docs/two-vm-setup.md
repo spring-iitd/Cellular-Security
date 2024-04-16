@@ -1,6 +1,8 @@
 # Two VM Setup - Open5GS and UERANSIM
 
 ## 1. Installation and Configuration of the Cellular-Security Repository
+
+### Access to Whitepaper
 Make sure you have access to Whitepaper (IITD Lab Machine) before doing this. You need to be on the IITD network. SSH into the lab machine:
 ```bash
 ssh <your_username>@<whitepaperIP>
@@ -9,16 +11,21 @@ ssh <your_username>@<whitepaperIP>
 Before this, make sure you have internet access in the whitepaper machine, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
 Test it out using `wget google.com` or `ping google.com`.
 
+### Clone Cellular Security Repository 
 Clone the existing IITD Cellular Security Repo:
 ```bash
 git clone https://github.com/spg-iitd/Cellular-Security/tree/main
-~/Cellular-Security/virtual-machine-installation/ueransim
-vagrant up
 ```
-Open a new terminal window
+Now in 
+
+```bash
+~/Cellular-Security/virtual-machine-installation/ueransim
+```
+and a new terminal window
 ```bash
 ~/Cellular-Security/virtual-machine-installation/open5gs
 ```
+### Make necessary changes for forwarding port
 Open `Vagrantfile` in the `open5gs` folder and note the port speicified in your open5GS vagrant file infront of `host` in the following line (if the line doesn't exist, add it at the appropirate location):
 
 ```yaml
@@ -30,6 +37,7 @@ ssh -L 9999:localhost:9999 divyanka@10.237.27.48
 ```
 or replace `9999` with any port specified in your open5GS vagrant file infront of `host` in the line above. Replace `divyanka` with your username.
 
+Do `vagrant up` in both the terminals.
 
 3. Now, on both the seperate terminals (with open5gs and ueransim folders), do `vagrant ssh` and each. You'll ssh into the machines.
 
@@ -330,11 +338,11 @@ Let all the other configuration be the default configuration.
     ```
    - Start gNB: `./nr-gnb -c ../config/open5gs-gnb.yaml`
    - Start UE: `./nr-ue -c ../config/open5gs-ue.yaml`
-3.  **Check Connection**: you can use the following commands to check if the UE is sucessfully able to connect to the internet :
-```bash
-ping google.com -I uesimtun0
-curl --interface uesimtun0 -X GET "https://httpbin.org/get"
-```
+3.  **Check Connection**: you can use the following commands to check if the UE is sucessfully able to connect to the internet:
+    ```bash
+    ping google.com -I uesimtun0
+    curl --interface uesimtun0 -X GET "https://httpbin.org/get"
+    ```
 If it runs, we have been successful!
 
 -------
