@@ -115,7 +115,7 @@ sudo ip link set ogstun up
 
 ## 4. Install dependencies and disable proxy
 
-In our **Open5GS VM**, efore this, make sure you have internet access in the VM, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
+In our **Open5GS VM**, before this, make sure you have internet access in the VM, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
 Test it out using `wget google.com` or `ping google.com`.
 
 Install NodeJS:
@@ -324,7 +324,10 @@ Let all the other configuration be the default configuration.
 
 1. **Internet Access**: Now, use proxy configuation again and add internet access to the UERANSIM VM:  [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf). Test it out using `wget google.com` or `ping google.com`.
 2. **Run UERANSIM**: On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the core network.
-
+    ``` bash
+    vagrant@ubuntu2204:~/UERANSIM/build$ ls
+    libdevbnd.so  nr-binder  nr-cli  nr-gnb  nr-ue 
+    ```
    - Start gNB: `./nr-gnb -c ../config/open5gs-gnb.yaml`
    - Start UE: `./nr-ue -c ../config/open5gs-ue.yaml`
 3.  **Check Connection**: you can use the following commands to check if the UE is sucessfully able to connect to the internet :
