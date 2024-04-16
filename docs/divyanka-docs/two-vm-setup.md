@@ -147,6 +147,13 @@ sudo ufw disable
 
 Now, after this, *DISABLE* IITD proxy. Comment out anything you added in `.bashrc` (if you did) and login again. Logout of your open5GS VM, and `vagrant reload` and `vagrant ssh`. Make sure `ping google.com` *doesn't* run.
 
+Now, within the `webui` folder we'll make some changes to the `server/index.js` file. Make sure to change the `_hostname` to the following, and ensure that the port is `9999`. These are the changed lines:
+
+```javascript
+const _hostname = process.env.HOSTNAME || '0.0.0.0';
+const port = process.env.PORT || 9999;
+```
+
 ## 5. Start the Open5GS services one-by-one
 Start the following commands one by one (line by line) and see if you get error at any point.
 
