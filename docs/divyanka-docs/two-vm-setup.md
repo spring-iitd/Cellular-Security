@@ -6,7 +6,7 @@ Make sure you have access to Whitepaper (IITD Lab Machine) before doing this. Yo
 ssh <your_username>@<whitepaperIP>
 ```
 
-Before this, make sure you have internet access in the machine, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
+Before this, make sure you have internet access in the whitepaper machine, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
 Test it out using `wget google.com` or `ping google.com`.
 
 Clone the existing IITD Cellular Security Repo:
@@ -44,6 +44,7 @@ scripts  shared  UERANSIM
 
 ## 2. Setup Open5GS Configuration
 
+In our **Open5GS VM**,
 
 ```bash
 vagrant@ubuntu2204:~/open5gs/install/etc/open5gs$ ls
@@ -96,8 +97,7 @@ upf:
 Let everything else remain the default configuration.
 
 ## 3. NAT Port Forwarding
-
-In order to bridge between the 5G Core UPF and WAN(Internet), I need enable IP forwarding and add a NAT rule to the IP Tables. Following are the NAT port forwarding I have done. Without this port forwarding the connectivity from 5G Core to internet would not work.
+In our **Open5GS VM**, in order to bridge between the 5G Core UPF and WAN(Internet), we need enable IP forwarding and add a NAT rule to the IP Tables. Following are the NAT port forwarding we will do. Without this port forwarding the connectivity from 5G Core to internet would not work.
 
 ```bash
 # nat port forwarding
@@ -115,7 +115,7 @@ sudo ip link set ogstun up
 
 ## 4. Install dependencies and disable proxy
 
-Before this, make sure you have internet access in the VM, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
+In our **Open5GS VM**, efore this, make sure you have internet access in the VM, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
 Test it out using `wget google.com` or `ping google.com`.
 
 Install NodeJS:
@@ -154,6 +154,16 @@ const port = process.env.PORT || 9999;
 ```
 
 ## 5. Start the Open5GS services one-by-one
+
+In our **Open5GS VM**, `cd` into the following folder.
+
+```
+vagrant@ubuntu2204:~/open5gs/install/bin$ ls
+error.txt      open5gs-bsfd  open5gs-nrfd   open5gs-pcrfd  open5gs-sgwcd  open5gs-udmd  output.log
+open5gs-amfd   open5gs-hssd  open5gs-nssfd  open5gs-scpd   open5gs-sgwud  open5gs-udrd  run_services.sh
+open5gs-ausfd  open5gs-mmed  open5gs-pcfd   open5gs-seppd  open5gs-smfd   open5gs-upfd
+```
+
 Start the following commands one by one (line by line) and see if you get error at any point.
 
 ```bash
@@ -202,6 +212,7 @@ Now, I got an error while running `sudo ./open5gs-pcfd & `
 
 ## 6. Register UE Device on Open5GS WebUI
 
+We're still doing all the changes in this section on the **Open5GS VM**.
 ### Understanding Port Fowarding between Whitepaper and Your machine
 **Here's the tricky part:** since we're are ssh-ing twice (one into the whitepaper and then into vagrant), it becomes difficult for us to forward ports. We have to do it twice. 
 
@@ -244,7 +255,7 @@ Operator Key: E8ED289DEBA952E4283B54E88E6183CA
 
 ## 7. Setup gNB and UE
 
-Now, go to your other terminal with UERANSIM VM:
+Now, go to your other terminal with **UERANSIM VM**:
 ```bash
 vagrant@ubuntu2204:~/UERANSIM/config$ ls
 custom-gnb.yaml  custom-ue.yaml  free5gc-gnb.yaml  free5gc-ue.yaml  open5gs-gnb.yaml  open5gs-ue.yaml
@@ -325,4 +336,5 @@ If it runs, we have been successful!
 
 -------
 ***Author**: Divyanka Chaudhari (2019CS50429)*
-Please let me know if there can be any modification/addition or just create a pull request.
+
+If there's any Modification, Addition or Clarification required, please let me know or create a pull request.
