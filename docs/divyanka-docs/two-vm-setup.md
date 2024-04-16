@@ -137,7 +137,6 @@ and run these commands
 cd webui
 npm install
 npm audit fix
-
 ```
 We're done with internet use in the Open5GS VM. *Disable* firewall:
 
@@ -220,9 +219,6 @@ vagrant@ubuntu2204:~/open5gs/webui$
 Now, in that folder,
 
 ```bash
-# clone webui
-# git clone https://github.com/open5gs/open5gs.git
-
 # run webui with npm
 cd webui
 
@@ -230,7 +226,7 @@ cd webui
 npm run dev --host 0.0.0.0
 # the web interface will start on
 # You need to check where it starts because of the multiple port forwarding we did
-http://localhost:9999/
+http://0.0.0.0:9999/
 
 # webui login credentials
 username - admin
