@@ -124,8 +124,11 @@ sudo ip link set ogstun up
 
 ## 4. Install dependencies and disable proxy
 
+### Ensure Internet Connection
 In our **Open5GS VM**, before this, make sure you have internet access in the VM, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
 Test it out using `wget google.com` or `ping google.com`.
+
+### Install NodeJS and dependencies
 
 Install NodeJS:
 ```bash
@@ -147,6 +150,8 @@ cd webui
 npm install
 npm audit fix
 ```
+
+### Disable Internet and Proxy from Open5GS VM
 We're done with internet use in the Open5GS VM. *Disable* firewall:
 
 ```bash
@@ -155,6 +160,7 @@ sudo ufw disable
 
 Now, after this, *DISABLE* IITD proxy. Comment out anything you added in `.bashrc` (if you did) and login again. Logout of your open5GS VM, and `vagrant reload` and `vagrant ssh`. Make sure `ping google.com` *doesn't* run.
 
+### Make changes to index.js in webUI folder
 Now, within the `webui` folder we'll make some changes to the `server/index.js` file. Make sure to change the `_hostname` to the following, and ensure that the port is `9999`. These are the changed lines:
 
 ```javascript
@@ -332,19 +338,27 @@ Let all the other configuration be the default configuration.
 
 ## 8. Test 5G Network
 
-1. **Internet Access**: Now, use proxy configuation again and add internet access to the UERANSIM VM:  [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf). Test it out using `wget google.com` or `ping google.com`.
-2. **Run UERANSIM**: On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the core network.
-    ``` bash
-    vagrant@ubuntu2204:~/UERANSIM/build$ ls
-    libdevbnd.so  nr-binder  nr-cli  nr-gnb  nr-ue 
-    ```
-   - Start gNB: `./nr-gnb -c ../config/open5gs-gnb.yaml`
-   - Start UE: `./nr-ue -c ../config/open5gs-ue.yaml`
-3.  **Check Connection**: you can use the following commands to check if the UE is sucessfully able to connect to the internet:
-    ```bash
-    ping google.com -I uesimtun0
-    curl --interface uesimtun0 -X GET "https://httpbin.org/get"
-    ```
+### Internet Access in UERANSIM VM
+
+Now, use proxy configuation again and add internet access to the UERANSIM VM:  [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf). Test it out using `wget google.com` or `ping google.com`.
+
+### Run UERANSIM
+
+On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the core network.
+``` bash
+vagrant@ubuntu2204:~/UERANSIM/build$ ls
+libdevbnd.so  nr-binder  nr-cli  nr-gnb  nr-ue 
+```
+- Start gNB: `./nr-gnb -c ../config/open5gs-gnb.yaml`
+- Start UE: `./nr-ue -c ../config/open5gs-ue.yaml`
+
+### Check Connection
+You can use the following commands to check if the UE is sucessfully able to connect to the internet:
+```bash
+ping google.com -I uesimtun0
+curl --interface uesimtun0 -X GET "https://httpbin.org/get"
+```
+
 If it runs, we have been successful!
 
 -------
