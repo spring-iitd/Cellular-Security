@@ -39,7 +39,8 @@ or replace `9999` with any port specified in your open5GS vagrant file infront o
 
 Do `vagrant up` in both the terminals.
 
-3. Now, on both the seperate terminals (with open5gs and ueransim folders), do `vagrant ssh` and each. You'll ssh into the machines.
+### SSH into the Vagrant machines
+Now, on both the seperate terminals (with open5gs and ueransim folders), do `vagrant ssh` and each. You'll ssh into the machines.
 
 ```bash
 vagrant@ubuntu2204:~$ ls
@@ -190,7 +191,8 @@ sudo ./open5gs-amfd &
 At any point, if you get any error, kill all of them by using `sudo pkill -9 open5gs`, resolve the error and try one-by-one again. Once you run all of them successfully, you can use all the commands at once the next time.
 
 ### Error Example: 
-Now, I got an error while running `sudo ./open5gs-pcfd & ` 
+Now, I got an error while running `sudo ./open5gs-pcfd & `
+
 ```bash
 <p><b>Connection to 127.0.0.4 failed.</b></p>
 </blockquote>
@@ -214,9 +216,9 @@ Now, I got an error while running `sudo ./open5gs-pcfd & `
 04/10 05:57:50.422: [sbi] ERROR: parse_content() failed (../lib/sbi/message.c:1006)
 04/10 05:57:50.422: [nrf] ERROR: cannot parse HTTP response (../src/nrf/sbi-path.c:148)c:148)
 ```
-**Source of error:** Proxy blocking connection
-**Resolve the error:** Disable proxy as mentioned earlier.
 
+- **Source of error:** Proxy blocking connection
+- **Resolving the error:** Disable proxy as mentioned earlier.
 
 ## 6. Register UE Device on Open5GS WebUI
 
@@ -348,4 +350,6 @@ If it runs, we have been successful!
 -------
 ***Author**: Divyanka Chaudhari (2019CS50429)*
 
-If there's any Modification, Addition or Clarification required, please let me know or create a pull request.
+
+Please add any more problems/solutions you encounter while following these steps to the file. This will help others. If there's any modification, addition or clarification, please let me know or create a pull request.
+
