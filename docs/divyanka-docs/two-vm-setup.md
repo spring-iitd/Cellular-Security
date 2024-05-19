@@ -372,7 +372,10 @@ Change port from 9999 to 8888.
   
 5. Now open `http://localhost:8888/` on your local machine, it should work.
 
-If you want to debug, check that port forwarding is done properly at each step, from Vagrant VM to Whitepaper to Your local machine. Here, proxy configurations were interfering with our port forwarding.
+
+Check that you're running the open5gs services before running the frontend.
+
+If you want to debug, check that port forwarding is done properly at each step, from Vagrant VM to Whitepaper to Your local machine. Here, proxy configurations were interfering with our port forwarding. 
 
 
 ## 7. Setup gNB and UE
