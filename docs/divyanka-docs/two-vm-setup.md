@@ -271,6 +271,108 @@ Operator Key: E8ED289DEBA952E4283B54E88E6183CA
 
 ```
 
+### If you're unable to run frontend on 0.0.0.0:9999 or localhost:9999
+
+On the whitepaper and Open5GS VM, do the following
+
+1. **Unset Proxy Environment Variables Temporarily:**
+
+   You can unset the proxy environment variables for the current session by running:
+
+   ```sh
+   unset http_proxy
+   unset https_proxy
+   unset ftp_proxy
+   unset all_proxy
+   unset no_proxy
+   unset HTTP_PROXY
+   unset HTTPS_PROXY
+   unset FTP_PROXY
+   unset ALL_PROXY
+   unset NO_PROXY
+   ```
+
+2. **Remove Proxy Settings from Shell Configuration Files:**
+
+   If the proxy settings are set in shell configuration files like `.bashrc`, `.bash_profile`, `.zshrc`, or `.profile`, you'll need to remove or comment out the lines that set these variables.
+
+   Open the relevant file with a text editor. For example, to edit `.bashrc`, use:
+
+   ```sh
+   nano ~/.bashrc
+   ```
+
+   Look for lines that set the proxy variables, such as:
+
+   ```sh
+   export http_proxy="http://proxy.example.com:8080"
+   export https_proxy="http://proxy.example.com:8080"
+   export ftp_proxy="http://proxy.example.com:8080"
+   export no_proxy="localhost,127.0.0.1"
+   ```
+
+   Comment out these lines by adding a `#` at the beginning, or remove them entirely:
+
+   ```sh
+   # export http_proxy="http://proxy.example.com:8080"
+   # export https_proxy="http://proxy.example.com:8080"
+   # export ftp_proxy="http://proxy.example.com:8080"
+   # export no_proxy="localhost,127.0.0.1"
+   ```
+
+   Save the file and exit the editor. For `nano`, you can save by pressing `Ctrl+O` and exit with `Ctrl+X`.
+
+3. **Apply Changes:**
+
+   After modifying the configuration file, apply the changes by sourcing the file:
+
+   ```sh
+   source ~/.bashrc
+   ```
+
+   Repeat the above steps for other shell configuration files if necessary, such as `.bash_profile`, `.zshrc`, or `.profile`.
+
+4. **Remove Proxy Configuration from Wget:**
+
+   If you've set proxy settings in the `wget` configuration file, remove them by editing `~/.wgetrc`:
+
+   ```sh
+   nano ~/.wgetrc
+   ```
+
+   Look for lines that set the proxy and remove or comment them out:
+
+   ```sh
+   # use_proxy=yes
+   # http_proxy=http://proxy.example.com:8080
+   # https_proxy=https://proxy.example.com:8080
+   # ftp_proxy=ftp://proxy.example.com:8080
+   ```
+
+   Save the file and exit the editor.
+
+Now, log out of EVERYTHING. On a terminal window, do the following:
+
+1. Instead of port 9999 we'll use port 8888 (or any other unused port):
+```
+ssh -L 8888:localhost:8888 divyanka@10.237.27.48
+```
+2. Now, within whitepaper:
+```
+divyanka@whitepaper:~/Cellular-Security/virtual-machine-installation/open5gs$ vagrant ssh -- -L 8888:localhost:8888
+```
+3. Change port in `index.js`:
+```
+vagrant@ubuntu2204:~/open5gs/webui/server$ ls
+index.js  models  routes
+```
+Change port from 9999 to 8888.
+4. Now do `npm run dev --host 0.0.0.0` 
+5. Now open `http://localhost:8888/` on your local machine, it should work.
+
+If you want to debug, check that port forwarding is done properly at each step, from Vagrant VM to Whitepaper to Your local machine. Here, proxy configurations were interfering with our port forwarding.
+
+
 ## 7. Setup gNB and UE
 
 Now, go to your other terminal with **UERANSIM VM**:
