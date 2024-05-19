@@ -367,7 +367,9 @@ vagrant@ubuntu2204:~/open5gs/webui/server$ ls
 index.js  models  routes
 ```
 Change port from 9999 to 8888.
-4. Now do `npm run dev --host 0.0.0.0` 
+
+4. Now do `npm run dev --host 0.0.0.0`
+  
 5. Now open `http://localhost:8888/` on your local machine, it should work.
 
 If you want to debug, check that port forwarding is done properly at each step, from Vagrant VM to Whitepaper to Your local machine. Here, proxy configurations were interfering with our port forwarding.
