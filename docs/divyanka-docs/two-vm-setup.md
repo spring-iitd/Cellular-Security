@@ -9,7 +9,7 @@ ssh <your_username>@<whitepaperIP>
 ```
 
 Before this, make sure you have internet access in the whitepaper machine, using [IITD Proxy](https://csc.iitd.ac.in/uploads/proxy_help.pdf).
-Test it out using `wget google.com` or `ping google.com`.
+Test it out using `wget google.com`, and not just `ping google.com`.
 
 ### Clone Cellular Security Repository 
 Clone the existing IITD Cellular Security Repo:
