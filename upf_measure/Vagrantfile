@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder "shared", "/home/vagrant/shared"
+  config.vm.box_check_update = true
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # VM #1 : Core Network Control Plane 
+  config.vm.define "5GC-Control" do |open5gs|
+    open5gs.vm.box = "core"
+    open5gs.vm.network "private_network", ip: "192.168.56.100"
+    open5gs.vm.network "forwarded_port", guest: 9999, host: 9889 
+    open5gs.vm.provider :parallels do |vb|
+      vb.name = "5GC C-Plane"
+      vb.update_guest_tools = true
+      vb.memory = 512
+      vb.cpus = 1
+    end
+   end 
+
+  # VM #2 : User Plane
+  config.vm.define "upf" do |upf|
+    upf.vm.box = "core"
+    upf.vm.network "private_network", ip: "192.168.56.110" 
+    upf.vm.provider :parallels do |vb|
+      vb.name = "5GC U-Plane"
+      vb.update_guest_tools = true
+      vb.memory = 512
+      vb.cpus = 1
+    end
+  end 
+
+  # VM #3 : RAN and UE VM
+  config.vm.define "ran-ue" do |ue|
+    ue.vm.box = "ran-ue"
+    ue.vm.network "private_network", ip: "192.168.56.120" #Mgmt NW
+    ue.vm.provider :parallels do |vb|
+      vb.name = "RAN&UE"
+      vb.update_guest_tools = true
+    end
+  end 
+
+end
