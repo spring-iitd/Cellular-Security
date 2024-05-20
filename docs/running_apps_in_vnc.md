@@ -29,3 +29,8 @@ Now you can run your applications like firefox with simple command:
 ```
 firefox 
 ```
+Alternatively you can run the browser directly through your cli. you need to have a VNC display connected in your viewer. 
+
+```
+export DISPLAY=:1
+```
