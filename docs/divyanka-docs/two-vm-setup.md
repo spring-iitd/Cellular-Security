@@ -3,7 +3,7 @@
 ## 1. Installation and Configuration of the Cellular-Security Repository
 
 ### Access to Whitepaper
-Make sure you have access to Whitepaper (IITD Lab Machine) before doing this. You need to be on the IITD network. SSH into the lab machine:
+Make sure you have access to Whitepaper (IITD Lab Machine) before doing this. You do NOT need root access. You need to be on the IITD network. SSH into the lab machine:
 ```bash
 ssh <your_username>@<whitepaperIP>
 ```
