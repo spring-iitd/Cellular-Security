@@ -458,8 +458,8 @@ On the UERANSIM VM, start the gNB and UE simulations. Ensure they connect to the
 vagrant@ubuntu2204:~/UERANSIM/build$ ls
 libdevbnd.so  nr-binder  nr-cli  nr-gnb  nr-ue 
 ```
-- Start gNB: `./nr-gnb -c ../config/open5gs-gnb.yaml`
-- Start UE: `./nr-ue -c ../config/open5gs-ue.yaml`
+- Start gNB: `sudo ./nr-gnb -c ../config/open5gs-gnb.yaml &`
+- Start UE: `sudo ./nr-ue -c ../config/open5gs-ue.yaml &`
 
 ### Check Connection
 You can use the following commands to check if the UE is sucessfully able to connect to the internet:
