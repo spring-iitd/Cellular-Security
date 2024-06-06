@@ -12,10 +12,7 @@ _*
 # Vagrant Local files #
 ######################
 .vagran*
-proxy.sh
-*.pcapng
-*.pcap
-try*
-*.csv
+
+# Not to be synced #
+######################
 *.log
-*.xlsx*
