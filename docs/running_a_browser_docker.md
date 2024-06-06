@@ -33,10 +33,8 @@ Environment="HTTPS_PROXY=http://proxy62.iitd.ac.in:3128"
 ```
 > C. Save the file and exit the editor and flush changes and restart Docker:
 ```bash
-	sudo systemctl daemon-reload
-	sudo systemctl restart docker
-
- 
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 > D. Run the original command again
 

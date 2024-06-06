@@ -1,3 +1,5 @@
+# Pyshark
+
 Using it to analyse pcap files over and over. There are tools like scapy or dpkt to understand and parse it. Pyshark uses tshark as a base to both capture and parsing rather than using a python native method of doing it. The same information as using wireshark.
 
 Pyshark has two modes of working and can access the details within the packet specifically. Tough one is first. 
