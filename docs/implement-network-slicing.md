@@ -31,7 +31,6 @@ sudo ./open5gs-udmd &
 sudo ./open5gs-udrd & 
 sudo ./open5gs-upfd & 
 sudo ./open5gs-amfd & 
-
 ```
 2. **Open the WebUI to add subscribers:** From our initial configuration, we know that our `mcc: 999` and `mnc: 70` so our IMSI number will always follow the format <mcc><mnc><identifier>. So, let's add subscribers with the following information, when not mentioned, use default settings:
 	1. `IMSI: 999705210000011`, `DNN/APN: internet`
