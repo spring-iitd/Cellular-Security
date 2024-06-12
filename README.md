@@ -1,73 +1,88 @@
 # 5G-and-Beyond
 
-This repository was made to help us decease the time it takes for us to setup a 5G core network. 
-
+This repository was made to help us decrease the time it takes for us to set up a 5G core network. 
+- `./configurations/` has files specific to a deployment that has been tested and runs. There can be some path dependencies that you might need to change. 
+- `./shared/` is shared between the VMs and the host machine.
+- `./docs/` has some documentation that might be useful.
+- `./scripts/` has some scripts that might be useful.
 ---
 
-## Task 1: Steps to Install 
-### Install Vagrant and Virtualbox  (or any other virtualisation tool of your choice)
-- _On an Ubuntu machine_, you can run the following command to install virtualbox and vagrant:
-  ```shell
-  $ sudo apt-get install virtualbox vagrant
-  ```
-- _On a Windows machine,_ use the GUI to install [virtualbox](https://www.virtualbox.org/wiki/Downloads) and vagrant from [here](https://developer.hashicorp.com/vagrant/downloads).
+## Setting up the environment
+### Setting up the internet connection
+- Ask Priyansh/Neha for access to `whitepaper`.
+- `ssh` into the server. You will find `proxy.sh` in your home folder. 
+- Make changes to the `proxy.sh` file. 
+  - Change the proxy_add variable to match your Kerberos.
+  - change the username and password per Kerberos.
+  > Note: This is saved in plaintext; you can use alternate scripts such as [https://github.com/SkullTech/iitd-proxylogin](https://github.com/SkullTech/iitd-proxylogin). 
+- Make changes to the `.bashrc` file.
+  - Uncomment the export commands to your `.bashrc` file.
+  - either log out and log in again or do `source ~/.bashrc`.
+- Run the `proxy.sh` script as a background process.
+  - Vagrant, Docker, Virtualbox, etc., should now be able to access the internet. If you need something installed, please contact Priyansh or Neha.
+### Making virtual machine images 
+We are using Vagrant to simplify the process of setting up the 5G core network. You need to add these images to your user to use them.
 
-### Clone this repository 
-- Please install git and clone this repository. 
-  ```shell
-  $ git clone https://github.com/spg-iitd/Cellular-Security.git
-  ```
-> Note: If you would like to install both Open5GS and UERANSIM seperately, you can follow the instructions in the [docs](docs/) folder.
+You can use the local images rather than downloading the images from the internet. 
 
-## Task 2:  Booting and Logging into the System 
-Most of the tasks that we shall be doing in this repository will be done on the virtual machine and you shall be SSHing into the VM. So, in a terminal window on your host machine, cd into the repository folder, and use the following command to boot the VM:
+```bash
+$ vagrant box add /boxes/core.box --name core-nw --provider virtualbox --force --clean
+$ vagrant box add /boxes/ran-ue.box --name ran-ue-nw --provider virtualbox --force --clean
+```
+
+## Deploying the 5G Network
+### Cloning the Repository
+Clone the repository and follow the instructions in the README.md file.
+```bash
+$ git clone https://github.com/spg-iitd/Cellular-Security.git
+$ cd Cellular-Security
+```
+### Booting and Logging into the System 
+Most of the tasks that we shall be doing in this repository will be done on the virtual machine and you shall be ssh-ing into the VM. You can find a quick start guide for Vagrant [here](docs/vagrant_cheatsheet.md). Use the following command to boot the VM:
 ```shell 
-vagrant up # starting the VMs
-vagrant ssh [name of the vm] # logging into the VM
-vagrant halt # stopping the VM
-vagrant destroy -f # destroying the VM
+$ vagrant up # starting the VMs
+$ vagrant ssh [ran_ue_nw/core_nw] # logging into the VM
+$ vagrant halt # stopping the VM
+$ vagrant destroy -f # destroying the VM
 ```
-You can find a quickstart guide for Vagrant [here](docs/vagrant_cheatsheet.md). You will find vagrant files for open5gs and ueransim already made in the virtual-machine-installation folder. 
-
-## Task 3: Setting up the 5G Core Network
-
-SSH into your machine which has the Open5GS machine, you should explore the folder `open5gs/install/`. You'll find configuration settings in `etc` folder and binaries in `bin`. Make the edits to both as per requirement and start the services one after the other. 
-You can run the following commands to start the services:
+- **core-nw**: This VM has the open5gs and free5gc installed. 
+- The open5gs core network has 300 users, and it is already configured. 
+- **ran-ue-nw**: This VM has the UERANSIM and PacketRusher installed.
+### Setting up the 5G Core Network
+You can ssh into the VM using `vagrant ssh core_nw`. Locate the configurations you would like to run. You can use the following commands to start the services:
 ```shell
-sudo ./open5gs-nrfd & 
-sudo ./open5gs-scpd & 
-sudo ./open5gs-smfd & 
-sudo ./open5gs-ausfd & 
-sudo ./open5gs-nssfd & 
-sudo ./open5gs-pcfd & 
-sudo ./open5gs-bsfd & 
-sudo ./open5gs-udmd & 
-sudo ./open5gs-udrd & 
-sudo ./open5gs-upfd & 
-sudo ./open5gs-amfd & 
+$ open5gs-nrfd -c nrf.yaml 
+$ open5gs-scpd -c scp.yaml 
+$ open5gs-smfd -c smf.yaml 
+$ open5gs-ausfd -c ausf.yaml 
+$ open5gs-nssfd -c nssf.yaml 
+$ open5gs-pcfd -c pcf.yaml 
+$ open5gs-bsfd -c bsf.yaml 
+$ open5gs-udmd -c udm.yaml 
+$ open5gs-udrd -c udr.yaml 
+$ open5gs-upfd -c upf.yaml 
+$ open5gs-amfd -c amf.yaml 
 ```
-By default the configuration file will be taken from the `open5gs/install/etc/open5gs/` folder. You can change the location of the configuration file by using the `-c` flag. 
-
-## Task 4: Setting up the gNodeB and UE
-SSH into your machine which has the UERANSIM installed, you should explore the folder `UERANSIM/`. If the installation was done correctly, you should see a `build` folder with the binaries for all the 5G core services. You can run the following commands to start the services:
+You may need to change the path of the configuration files. You can also run these processes in the background by adding `&` at the end of the command.
+### Setting up the gNodeB and UE
+You can ssh into the VM using `vagrant ssh ran_ue_nw`. Locate the configurations you would like to run. Locate the configurations you would like to run. You can use the following commands to start the services:
 ```shell
-./build/nr-gnb -c config/open5gs-gnb.yaml &
-./build/nr-ue -c config/open5gs-ue.yaml &
-``` 
-> Confirm that the gNodeB and UE are connected by checking the logs and looking at the interfaces on the gNodeB. You can further explore each of the config files to understand the parameters that are being used. `nr-cli` gives you a CLI to interact with the gNodeB and UE states. 
+$ nr-gnb -c gnb.yaml 
+$ sudo nr-ue -c ue.yaml 
+```
+> Confirm that the gNodeB and UE are connected by checking the logs and looking at the interfaces on the gNodeB. 
+> You can further explore each of the config files to understand the parameters that are being used. `nr-cli` gives you a CLI to interact with the gNodeB and UE states. 
 
-## Task 5: Setting up the Internet Connection
-If you are using the two VM setup, you can use the following commands to check if the UE is sucessfully able to connect to the internet :
+### Setting up the Internet Connection
+You can use the following commands to check if the UE is successfully able to connect to the internet:
 ```shell
 ping google.com -I uesimtun0
 curl --interface uesimtun0 -X GET "https://httpbin.org/get"
 ```
-
----
-## References 
-1. https://github.com/eatsan/open5gs-ueransim-vagrant-config
-2. https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-
-## FAQs 
-1. In case of an SCTP error, set the NatNetwork address in the Oracle VM box(/tools/network) to 192.168.56.0/24. Then for both VMs select the network attached to  'NAT network' and promiscuous mode to 'allow all '
+> You may need to export proxy settings in the VM to access the internet.
+```shell
+export http_proxy=http:<proxy>:<port>
+export https_proxy=http:<proxy>:<port>
+# example: http://proxy61.iitd.ac.in:3128
+```
 

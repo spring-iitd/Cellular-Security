@@ -1,5 +1,5 @@
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/ausf.log
+  file: /home/vagrant/shared/log/nssf.log
 #  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
@@ -7,17 +7,20 @@ global:
     ue: 1024  # The number of UE can be increased depending on memory size.
 #    peer: 64
 
-ausf:
+nssf:
   sbi:
     server:
-      - address: 127.0.0.11
+      - address: 127.0.0.14
         port: 7777
     client:
 #      nrf:
 #        - uri: http://127.0.0.10:7777
       scp:
         - uri: http://127.0.0.200:7777
-
+      nsi:
+        - uri: http://127.0.0.10:7777
+          s_nssai:
+            sst: 1
 ################################################################################
 # SBI Server
 ################################################################################
@@ -25,7 +28,7 @@ ausf:
 #  sbi:
 #    server:
 #      - dev: eth0
-#        advertise: open5gs-ausf.svc.local
+#        advertise: open5gs-nssf.svc.local
 #
 #  sbi:
 #    server:
@@ -37,6 +40,29 @@ ausf:
 ################################################################################
 # SBI Client
 ################################################################################
+#  o Network Slice Instance(NSI)
+#   1. NRF[http://::1:7777/nnrf-nfm/v1/nf-instances]
+#      S-NSSAI[SST:1]
+#   2. NRF[http://127.0.0.19:7777/nnrf-nfm/v1/nf-instances]
+#      NSSAI[SST:1, SD:000080]
+#   3. NRF[http://127.0.0.10:7777/nnrf-nfm/v1/nf-instances]
+#      NSSAI[SST:1, SD:009000]
+#
+#  sbi:
+#    client:
+#      nsi:
+#        - uri: http://[::1]:7777
+#          s_nssai:
+#            sst: 1
+#        - uri: http://127.0.0.19:7777
+#          s_nssai:
+#            sst: 1
+#            sd: 000080
+#        - uri: http://127.0.0.10:7777
+#          s_nssai:
+#            sst: 1
+#            sd: 009000
+#
 #  o Direct communication with NRF interaction
 #  sbi:
 #    client:
@@ -67,35 +93,43 @@ ausf:
 #    tls:
 #      server:
 #        scheme: https
-#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
-#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
+#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/nssf.key
+#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/nssf.crt
 #      client:
 #        scheme: https
 #        cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
 #  sbi:
 #    server:
-#      - address: ausf.localdomain
+#      - address: nssf.localdomain
 #    client:
 #      nrf:
 #        - uri: https://nrf.localdomain
+#      nsi:
+#        - uri: https://nrf.localdomain
+#          s_nssai:
+#            sst: 1
 #
 #  o Add client TLS verification
 #  default:
 #    tls:
 #      server:
 #        scheme: https
-#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
-#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
+#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/nssf.key
+#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/nssf.crt
 #        verify_client: true
 #        verify_client_cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
 #      client:
 #        scheme: https
 #        cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
-#        client_private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
-#        client_cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
+#        client_private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/nssf.key
+#        client_cert: /home/vagrant/open5gs/install/etc/open5gs/tls/nssf.crt
 #  sbi:
 #    server:
-#      - address: ausf.localdomain
+#      - address: nssf.localdomain
 #    client:
 #      nrf:
 #        - uri: https://nrf.localdomain
+#      nsi:
+#        - uri: https://nrf.localdomain
+#          s_nssai:
+#            sst: 1

@@ -1,5 +1,5 @@
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/nrf.log
+  file: /home/vagrant/shared/log/nrf.log
 #  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:

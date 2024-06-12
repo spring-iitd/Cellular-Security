@@ -1,5 +1,5 @@
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/bsf.log
+  file: /home/vagrant/shared/log/ausf.log
 #  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
@@ -7,10 +7,10 @@ global:
     ue: 1024  # The number of UE can be increased depending on memory size.
 #    peer: 64
 
-bsf:
+ausf:
   sbi:
     server:
-      - address: 127.0.0.15
+      - address: 127.0.0.11
         port: 7777
     client:
 #      nrf:
@@ -25,7 +25,7 @@ bsf:
 #  sbi:
 #    server:
 #      - dev: eth0
-#        advertise: open5gs-bsf.svc.local
+#        advertise: open5gs-ausf.svc.local
 #
 #  sbi:
 #    server:
@@ -67,14 +67,14 @@ bsf:
 #    tls:
 #      server:
 #        scheme: https
-#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/bsf.key
-#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/bsf.crt
+#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
+#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
 #      client:
 #        scheme: https
 #        cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
 #  sbi:
 #    server:
-#      - address: bsf.localdomain
+#      - address: ausf.localdomain
 #    client:
 #      nrf:
 #        - uri: https://nrf.localdomain
@@ -84,18 +84,18 @@ bsf:
 #    tls:
 #      server:
 #        scheme: https
-#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/bsf.key
-#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/bsf.crt
+#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
+#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
 #        verify_client: true
 #        verify_client_cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
 #      client:
 #        scheme: https
 #        cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
-#        client_private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/bsf.key
-#        client_cert: /home/vagrant/open5gs/install/etc/open5gs/tls/bsf.crt
+#        client_private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
+#        client_cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
 #  sbi:
 #    server:
-#      - address: bsf.localdomain
+#      - address: ausf.localdomain
 #    client:
 #      nrf:
 #        - uri: https://nrf.localdomain

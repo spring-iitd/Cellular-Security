@@ -1,13 +1,13 @@
 # IMSI number of the UE. IMSI = [MCC|MNC|MSISDN] (In total 15 digits)
-supi: 'imsi-999700000021309'
+supi: 'imsi-999700000000001'
 # Mobile Country Code value of HPLMN
 mcc: '999'
 # Mobile Network Code value of HPLMN (2 or 3 digits)
 mnc: '70'
 # SUCI Protection Scheme : 0 for Null-scheme, 1 for Profile A and 2 for Profile B
-protectionScheme: 0
+protectionScheme: 1
 # Home Network Public Key for protecting with SUCI Profile A
-homeNetworkPublicKey: '5a8d38864820197c3394b92613b20b91633cbd897119273bf8e4a6f4eec0a650'
+homeNetworkPublicKey: 'e421686f6fb2d70e3fa28d940494095686c3179fef53514667a6ed106b8a7d3d'
 # Home Network Public Key ID for protecting with SUCI Profile A
 homeNetworkPublicKeyId: 1
 # Routing Indicator
@@ -29,7 +29,6 @@ imeiSv: '4370816125816151'
 # List of gNB IP addresses for Radio Link Simulation
 gnbSearchList:
   - 192.168.56.120
-#  - 127.0.0.1
 
 # UAC Access Identities Configuration
 uacAic:

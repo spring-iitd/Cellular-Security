@@ -1,5 +1,5 @@
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/smf.log
+  file: /home/vagrant/shared/log/smf.log
 #  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
@@ -31,8 +31,8 @@ smf:
       - address: 127.0.0.4
   metrics:
     server:
-      - address: 127.0.0.4
-        port: 9090
+      - address: 192.168.56.100
+        port: 9094
   session:
     - subnet: 10.45.0.1/16
     - subnet: 2001:db8:cafe::1/48
