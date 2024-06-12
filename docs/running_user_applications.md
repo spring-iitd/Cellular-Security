@@ -11,20 +11,16 @@ A user application is a program that runs on the user equipment (UE) and communi
 
 ## What do we want to achieve?
 We would like to run the user application and send all the information through the UE interface through the 5G connection. We just need to make sure that the user is communicating over the UE TUN interface. Lucky for us, UERANSIM has a solution built in. 
-```
+```bash
 # ping command bind direcly to uesimtun0
 ping -I uesimtun0 google.com
 
 # curl command bind direcly to uesimtun0 
 curl --interface uesimtun0 -X GET "https://httpbin.org/get"
   
---- 
-
 # bind curl command via nr-binder
 # nr-binder use pdu session ip
 ./nr-binder 10.45.0.3 curl -X GET "https://httpbin.org/get"
-
----
 
 # bind python application via nr-binder
 # request.pyt is simple python program which send http GET request

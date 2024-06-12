@@ -1,6 +1,4 @@
-TODO: Add images, add references to other related guides when completed
-
-## Network Slicing with Basic Configuration
+# Network Slicing with Basic Configuration
 
 Network slicing is a fundamental technology in 5G networks that enables multiple logical networks to be created on top of a common physical infrastructure. This is crucial for meeting the diverse requirements of various applications, such as enhanced mobile broadband (eMBB), massive machine-type communications (mMTC), and ultra-reliable and low-latency communications (URLLC).
 
@@ -78,3 +76,4 @@ Similarly, modify `ue2_iot.yaml`, `ue3_edge.yaml` and `ue4_yourownslice.yaml` wi
 -------
 
 ***Author:** Divyanka Chaudhari (2019CS50429)*
+TODO: Add images, add references to other related guides when completed
