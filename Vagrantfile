@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = 1
     end
 
-    config.trigger.after :up do |trigger|
+    core_nw.trigger.after :up do |trigger|
       trigger.name = "Finished Message"
       trigger.info = "Machine is up!"
       config.vm.provision :shell, :run => 'always', :privileged => true, inline: <<-SHELL

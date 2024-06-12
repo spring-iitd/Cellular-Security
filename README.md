@@ -9,7 +9,7 @@ This repository was made to help us decrease the time it takes for us to set up 
 
 ## Setting up the environment
 ### Setting up the internet connection
-- Ask Priyansh/Neha for access to `whitepaper`.
+- Ask Priyansh or Neha for access to `whitepaper`.
 - `ssh` into the server. You will find `proxy.sh` in your home folder. 
 - Make changes to the `proxy.sh` file. 
   - Change the proxy_add variable to match your Kerberos.
@@ -63,6 +63,7 @@ $ open5gs-udrd -c udr.yaml
 $ open5gs-upfd -c upf.yaml 
 $ open5gs-amfd -c amf.yaml 
 ```
+> If you are getting errors while starting the services, like services aren't connecting to each other, or the services are not starting, check if there is a proxy set in the VM. You can check this by running `env | grep -i proxy` and unset the proxy by running `unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY`.
 You may need to change the path of the configuration files. You can also run these processes in the background by adding `&` at the end of the command.
 ### Setting up the gNodeB and UE
 You can ssh into the VM using `vagrant ssh ran_ue_nw`. Locate the configurations you would like to run. Locate the configurations you would like to run. You can use the following commands to start the services:
