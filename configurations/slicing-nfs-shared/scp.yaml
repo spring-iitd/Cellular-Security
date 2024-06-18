@@ -1,6 +1,5 @@
 logger:
-  file:
-    path: /home/vagrant/open5gs/install/var/log/open5gs/scp.log
+  file: /home/vagrant/open5gs/install/var/log/open5gs/scp.log
 #  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
