@@ -1,52 +1,60 @@
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/smf.log
-#  level: info   # fatal|error|warn|info(default)|debug|trace
+  file: 
+    path: log/smf.log
+  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
   max:
-    ue: 1024  # The number of UE can be increased depending on memory size.
+    ue: 10240  # The number of UE can be increased depending on memory size.
 #    peer: 64
 
 smf:
   sbi:
     server:
-      - address: 127.0.0.4
-        port: 7777
+      - address: 192.168.56.100
+        port: 7805
     client:
-#      nrf:
-#        - uri: http://127.0.0.10:7777
+      nrf:
+        - uri: http://192.168.56.100:7820
       scp:
-        - uri: http://127.0.0.200:7777
+        - uri: http://192.168.56.100:7810
   pfcp:
     server:
-      - address: 127.0.0.4
+      - address: 192.168.56.100
     client:
       upf:
-        - address: 127.0.0.7
+        - address: 192.168.56.101
   gtpc:
     server:
-      - address: 127.0.0.4
+      - address: 192.168.56.100
   gtpu:
     server:
-      - address: 127.0.0.4
+      - address: 192.168.56.100
   metrics:
     server:
-      - address: 127.0.0.4
-        port: 9090
+      - address:  10.211.55.224
+        port: 9093
   session:
+    - subnet: 10.45.0.0/16
+      gateway: 10.45.0.1
+      dnn: internet
     - subnet: 10.45.0.1/16
-    - subnet: 2001:db8:cafe::1/48
+      gateway: 10.45.0.1 
+      dnn: iotnet
   dns:
     - 8.8.8.8
     - 8.8.4.4
-    - 2001:4860:4860::8888
-    - 2001:4860:4860::8844
   mtu: 1400
 #  p-cscf:
 #    - 127.0.0.1
 #    - ::1
 #  ctf:
 #    enabled: auto   # auto(default)|yes|no
+#  security_indication:
+#    integrity_protection_indication: required|preferred|not-needed
+#    confidentiality_protection_indication: required|preferred|not-needed
+#    maximum_integrity_protected_data_rate_uplink: bitrate64kbs|maximum-UE-rate
+#    maximum_integrity_protected_data_rate_downlink: bitrate64kbs|maximum-UE-rate
   freeDiameter: /home/vagrant/open5gs/install/etc/freeDiameter/smf.conf
 
 ################################################################################

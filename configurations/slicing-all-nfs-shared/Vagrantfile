@@ -1,0 +1,116 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder "shared", "/home/vagrant/shared"
+  config.vm.box_check_update = true
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # VM 1: OPEN5GS 5G core network (All-in-one - but AMF)
+  config.vm.define "open5gs" do |open5gs|
+    open5gs.vm.box = "priyanshsingh/core-network"
+    open5gs.vm.network "private_network", ip: OPEN5GS_IPv4_ADDR
+    open5gs.vm.network "private_network", ip: UPF_OPEN5GS_IPv4_ADDR
+    open5gs.vm.network "forwarded_port", host: 9909, guest: 9999
+    open5gs.vm.network "forwarded_port", host: 9091, guest: 9091
+    open5gs.vm.network "forwarded_port", host: 9092, guest: 9092
+    open5gs.vm.network "forwarded_port", host: 9093, guest: 9093
+    open5gs.vm.network "forwarded_port", host: 9094, guest: 9094
+
+    open5gs.vm.provider :parallels do |vb|
+      vb.name = "5gc"
+      vb.update_guest_tools = true
+      vb.memory = OPEN5GS_VRAM
+      vb.cpus = OPEN5GS_VCPU
+    end
+
+    open5gs.trigger.after :up do |trigger|
+      trigger.name = "Finished Message"
+      trigger.info = "Machine is up!"
+      open5gs.vm.provision :shell, :run => 'always', :privileged => true, inline: <<-SHELL
+        # This script will run everytime that the system bootsup 
+        sudo ip tuntap add name ogstun mode tun
+        sudo ip addr add 10.45.0.1/16 dev ogstun
+        sudo ip addr add 2001:db8:cafe::1/48 dev ogstun
+        sudo ip link set ogstun up
+
+        sudo ip tuntap add name ogstun3 mode tun
+        sudo ip addr add 10.46.0.1/16 dev ogstun3
+        sudo ip link set ogstun3 up
+
+        echo "--- Adding a route for the UE to have WAN connectivity over SGi/N6 -------"
+        sudo sh /home/vagrant/open5gs/misc/netconf.sh
+        ### Enable IPv4/IPv6 Forwarding
+        sudo sysctl -w net.ipv4.ip_forward=1
+        sudo sysctl -w net.ipv6.conf.all.forwarding=1
+        ### Add NAT Rule
+        sudo iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
+        sudo iptables -t nat -A POSTROUTING -s 10.46.0.0/16 ! -o ogstun3 -j MASQUERADE
+        sudo ip6tables -t nat -A POSTROUTING -s 2001:db8:cafe::/48 ! -o ogstun -j MASQUERADE
+      SHELL
+    end
+  end 
+
+  # VM 2: RAN (gNB) Simulator
+  config.vm.define "gnb_box1" do |gnb|
+    gnb.vm.box = "priyanshsingh/ran-ue"
+    gnb.vm.network "private_network", ip: RAN0_IPv4_ADDR
+    gnb.vm.network "private_network", ip: RAN1_IPv4_ADDR
+    gnb.vm.network "private_network", ip: RAN2_IPv4_ADDR
+
+    gnb.vm.provider :parallels do |vb|
+      vb.name = "gNodeB1"
+      vb.update_guest_tools = true      
+      vb.memory = RAN_VRAM1
+      vb.cpus = RAN_VCPU1
+    end
+  end 
+
+  # VM 3: UE Simulator
+  config.vm.define "ue_box1" do |gnb|
+    gnb.vm.box = "priyanshsingh/ran-ue"
+    gnb.vm.network "private_network", ip: UE0_IPv4_ADDR
+
+    gnb.vm.provider :parallels do |vb|
+      vb.name = "ueB1"
+      vb.update_guest_tools = true
+      vb.memory = UE_VRAM1
+      vb.cpus = UE_VCPU1
+    end
+  end 
+
+  # VM 4: UE Simulator
+  config.vm.define "ue_box2" do |gnb|
+      gnb.vm.box = "priyanshsingh/ran-ue"
+      gnb.vm.network "private_network", ip: UE1_IPv4_ADDR
+  
+      gnb.vm.provider :parallels do |vb|
+        vb.name = "ueB2"
+        vb.update_guest_tools = true
+        vb.memory = UE_VRAM1
+        vb.cpus = UE_VCPU1
+      end
+    end 
+end
+
+
+# Core Network Configurarion
+OPEN5GS_IPv4_ADDR = "192.168.56.100"
+UPF_OPEN5GS_IPv4_ADDR = "192.168.56.101"
+OPEN5GS_VCPU = "1"
+OPEN5GS_VRAM = "512"
+
+# RAN Box 1 Configurarion
+RAN_VRAM1 = "2048"
+RAN_VCPU1 = "2"
+RAN0_IPv4_ADDR = "192.168.56.120"
+RAN1_IPv4_ADDR = "192.168.56.121"
+RAN2_IPv4_ADDR = "192.168.56.122"
+
+# UE Box 1 Configurarion
+UE0_IPv4_ADDR = "192.168.56.130"
+UE1_IPv4_ADDR = "192.168.56.130"
+
+UE_VRAM1 = "2048"
+UE_VCPU1 = "2"

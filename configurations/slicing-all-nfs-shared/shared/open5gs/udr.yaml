@@ -1,22 +1,25 @@
+db_uri: mongodb://localhost/open5gs
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/ausf.log
-#  level: info   # fatal|error|warn|info(default)|debug|trace
+  file: 
+    path: log/udr.log
+  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
   max:
-    ue: 1024  # The number of UE can be increased depending on memory size.
+    ue: 10240  # The number of UE can be increased depending on memory size.
 #    peer: 64
 
-ausf:
+udr:
   sbi:
     server:
-      - address: 127.0.0.11
-        port: 7777
+      - address: 192.168.56.100
+        port: 7806
     client:
-#      nrf:
-#        - uri: http://127.0.0.10:7777
+      nrf:
+        - uri: http://192.168.56.100:7820
       scp:
-        - uri: http://127.0.0.200:7777
+        - uri: http://192.168.56.100:7810
+
 
 ################################################################################
 # SBI Server
@@ -25,7 +28,7 @@ ausf:
 #  sbi:
 #    server:
 #      - dev: eth0
-#        advertise: open5gs-ausf.svc.local
+#        advertise: open5gs-udr.svc.local
 #
 #  sbi:
 #    server:
@@ -67,14 +70,14 @@ ausf:
 #    tls:
 #      server:
 #        scheme: https
-#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
-#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
+#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/udr.key
+#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/udr.crt
 #      client:
 #        scheme: https
 #        cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
 #  sbi:
 #    server:
-#      - address: ausf.localdomain
+#      - address: udr.localdomain
 #    client:
 #      nrf:
 #        - uri: https://nrf.localdomain
@@ -84,18 +87,18 @@ ausf:
 #    tls:
 #      server:
 #        scheme: https
-#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
-#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
+#        private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/udr.key
+#        cert: /home/vagrant/open5gs/install/etc/open5gs/tls/udr.crt
 #        verify_client: true
 #        verify_client_cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
 #      client:
 #        scheme: https
 #        cacert: /home/vagrant/open5gs/install/etc/open5gs/tls/ca.crt
-#        client_private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.key
-#        client_cert: /home/vagrant/open5gs/install/etc/open5gs/tls/ausf.crt
+#        client_private_key: /home/vagrant/open5gs/install/etc/open5gs/tls/udr.key
+#        client_cert: /home/vagrant/open5gs/install/etc/open5gs/tls/udr.crt
 #  sbi:
 #    server:
-#      - address: ausf.localdomain
+#      - address: udr.localdomain
 #    client:
 #      nrf:
 #        - uri: https://nrf.localdomain

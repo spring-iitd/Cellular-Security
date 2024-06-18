@@ -1,13 +1,23 @@
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/udm.log
-#  level: info   # fatal|error|warn|info(default)|debug|trace
+  file: 
+    path: log/udm.log
+  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
   max:
-    ue: 1024  # The number of UE can be increased depending on memory size.
+    ue: 10240  # The number of UE can be increased depending on memory size.
 #    peer: 64
 
 udm:
+  sbi:
+    server:
+      - address: 192.168.56.100
+        port: 7807
+    client:
+      nrf:
+        - uri: http://192.168.56.100:7820
+      scp:
+        - uri: http://192.168.56.100:7810
   hnet:
     - id: 1
       scheme: 1
@@ -27,15 +37,6 @@ udm:
     - id: 6
       scheme: 2
       key: /home/vagrant/open5gs/install/etc/open5gs/hnet/secp256r1-6.key
-  sbi:
-    server:
-      - address: 127.0.0.12
-        port: 7777
-    client:
-#      nrf:
-#        - uri: http://127.0.0.10:7777
-      scp:
-        - uri: http://127.0.0.200:7777
 
 #
 ################################################################################

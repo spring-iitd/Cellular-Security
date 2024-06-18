@@ -1,20 +1,21 @@
 logger:
-  file: /home/vagrant/open5gs/install/var/log/open5gs/scp.log
-#  level: info   # fatal|error|warn|info(default)|debug|trace
+  file: 
+    path: log/scp.log
+  level: info   # fatal|error|warn|info(default)|debug|trace
 
 global:
   max:
-    ue: 1024  # The number of UE can be increased depending on memory size.
+    ue: 10240  # The number of UE can be increased depending on memory size.
 #    peer: 64
 
 scp:
   sbi:
     server:
-      - address: 127.0.0.200
-        port: 7777
+      - address: 192.168.56.100
+        port: 7810
     client:
       nrf:
-        - uri: http://127.0.0.10:7777
+        - uri: http://192.168.56.100:7820
 
 ################################################################################
 # SCP Info
