@@ -26,25 +26,25 @@ We are using Vagrant to simplify the process of setting up the 5G core network. 
 You can use the local images rather than downloading the images from the internet. 
 
 ```bash
-$ vagrant box add /boxes/core.box --name core-nw --provider virtualbox --force --clean
-$ vagrant box add /boxes/ran-ue.box --name ran-ue-nw --provider virtualbox --force --clean
-$ vagrant plugin install vagrant-proxyconf
+vagrant box add /boxes/core.box --name core-nw --provider virtualbox --force --clean
+vagrant box add /boxes/ran-ue.box --name ran-ue-nw --provider virtualbox --force --clean
+vagrant plugin install vagrant-proxyconf
 ```
 
 ## Deploying the 5G Network
 ### Cloning the Repository
 Clone the repository and follow the instructions in the README.md file.
 ```bash
-$ git clone https://github.com/spg-iitd/Cellular-Security.git
-$ cd Cellular-Security
+git clone https://github.com/spg-iitd/Cellular-Security.git
+cd Cellular-Security
 ```
 ### Booting and Logging into the System 
 Most of the tasks that we shall be doing in this repository will be done on the virtual machine and you shall be ssh-ing into the VM. You can find a quick start guide for Vagrant [here](docs/vagrant_cheatsheet.md). Use the following command to boot the VM:
 ```shell 
-$ vagrant up # starting the VMs
-$ vagrant ssh [ran_ue_nw/core_nw] # logging into the VM
-$ vagrant halt # stopping the VM
-$ vagrant destroy -f # destroying the VM
+vagrant up # starting the VMs
+vagrant ssh [ran_ue_nw/core_nw] # logging into the VM
+vagrant halt # stopping the VM
+vagrant destroy -f # destroying the VM
 ```
 - **core-nw**: This VM has the open5gs and free5gc installed. 
 - The open5gs core network has 300 users, and it is already configured. 
@@ -52,25 +52,25 @@ $ vagrant destroy -f # destroying the VM
 ### Setting up the 5G Core Network
 You can ssh into the VM using `vagrant ssh core_nw`. Locate the configurations you would like to run. You can use the following commands to start the services:
 ```shell
-$ open5gs-nrfd -c nrf.yaml 
-$ open5gs-scpd -c scp.yaml 
-$ open5gs-smfd -c smf.yaml 
-$ open5gs-ausfd -c ausf.yaml 
-$ open5gs-nssfd -c nssf.yaml 
-$ open5gs-pcfd -c pcf.yaml 
-$ open5gs-bsfd -c bsf.yaml 
-$ open5gs-udmd -c udm.yaml 
-$ open5gs-udrd -c udr.yaml 
-$ open5gs-upfd -c upf.yaml 
-$ open5gs-amfd -c amf.yaml 
+open5gs-nrfd -c nrf.yaml 
+open5gs-scpd -c scp.yaml 
+open5gs-smfd -c smf.yaml 
+open5gs-ausfd -c ausf.yaml 
+open5gs-nssfd -c nssf.yaml 
+open5gs-pcfd -c pcf.yaml 
+open5gs-bsfd -c bsf.yaml 
+open5gs-udmd -c udm.yaml 
+open5gs-udrd -c udr.yaml 
+open5gs-upfd -c upf.yaml 
+open5gs-amfd -c amf.yaml 
 ```
 > If you are getting errors while starting the services, like services aren't connecting to each other, or the services are not starting, check if there is a proxy set in the VM. You can check this by running `env | grep -i proxy` and unset the proxy by running `unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY`.
 You may need to change the path of the configuration files. You can also run these processes in the background by adding `&` at the end of the command.
 ### Setting up the gNodeB and UE
 You can ssh into the VM using `vagrant ssh ran_ue_nw`. Locate the configurations you would like to run. Locate the configurations you would like to run. You can use the following commands to start the services:
 ```shell
-$ nr-gnb -c gnb.yaml 
-$ sudo nr-ue -c ue.yaml 
+nr-gnb -c gnb.yaml 
+sudo nr-ue -c ue.yaml 
 ```
 > Confirm that the gNodeB and UE are connected by checking the logs and looking at the interfaces on the gNodeB. 
 > You can further explore each of the config files to understand the parameters that are being used. `nr-cli` gives you a CLI to interact with the gNodeB and UE states. 
