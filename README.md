@@ -28,6 +28,7 @@ You can use the local images rather than downloading the images from the interne
 ```bash
 $ vagrant box add /boxes/core.box --name core-nw --provider virtualbox --force --clean
 $ vagrant box add /boxes/ran-ue.box --name ran-ue-nw --provider virtualbox --force --clean
+$ vagrant plugin install vagrant-proxyconf
 ```
 
 ## Deploying the 5G Network
