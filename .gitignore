@@ -12,7 +12,9 @@ _*
 # Vagrant Local files #
 ######################
 .vagran*
+.vscode*
 proxy.sh
 # Not to be synced #
 ######################
 *.log
+*.pcap
