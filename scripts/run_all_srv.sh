@@ -9,4 +9,3 @@ open5gs-ausfd -c ausf.yaml &
 open5gs-amfd -c amf.yaml &
 open5gs-upfd -c upf.yaml &
 open5gs-smfd -c smf.yaml &
-
