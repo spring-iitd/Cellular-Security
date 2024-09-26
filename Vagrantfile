@@ -24,6 +24,7 @@ Vagrant.configure("2") do |config|
       # Use the following to do packet capture automatically when the machine is booted.
       vb.customize ["modifyvm", :id, "--nictrace1", "on", "--nictracefile1", "pcaps/nictrace1.pcap"]
       vb.customize ["modifyvm", :id, "--nictrace2", "on", "--nictracefile2", "pcaps/nictrace2.pcap"]
+      # Use the following to reduce the effectiveness of CPU
       # vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
       vb.check_guest_additions = false
     end
