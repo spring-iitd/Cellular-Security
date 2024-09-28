@@ -1,1 +1,0 @@
-sudo pkill -9 nr-

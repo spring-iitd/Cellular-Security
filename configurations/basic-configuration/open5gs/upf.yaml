@@ -16,13 +16,14 @@ upf:
 #        - address: 127.0.0.4
   gtpu:
     server:
-      - address: 192.168.56.3
+      - address: 192.168.56.100
+#      - address: 127.0.0.7
   session:
     - subnet: 10.45.0.1/16
     - subnet: 2001:db8:cafe::1/48
   metrics:
     server:
-      - address: 192.168.56.3
+      - address: 192.168.56.100
         port: 9095
 
 ################################################################################
