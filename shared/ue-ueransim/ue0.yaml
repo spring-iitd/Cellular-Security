@@ -1,5 +1,5 @@
 # IMSI number of the UE. IMSI = [MCC|MNC|MSISDN] (In total 15 digits)
-supi: 'imsi-999700000001001'
+supi: 'imsi-999700000000001'
 # Mobile Country Code value of HPLMN
 mcc: '999'
 # Mobile Network Code value of HPLMN (2 or 3 digits)
@@ -28,7 +28,7 @@ imeiSv: '4370816125816151'
 
 # List of gNB IP addresses for Radio Link Simulation
 gnbSearchList:
-  - 192.168.56.121
+  - 192.168.56.130
 
 # UAC Access Identities Configuration
 uacAic:

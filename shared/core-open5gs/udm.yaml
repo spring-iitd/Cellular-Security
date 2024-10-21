@@ -4,7 +4,7 @@ logger:
 
 global:
   max:
-    ue: 1024  # The number of UE can be increased depending on memory size.
+    ue: 10240  # The number of UE can be increased depending on memory size.
 #    peer: 64
 
 udm:
