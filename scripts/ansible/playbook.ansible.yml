@@ -1,0 +1,36 @@
+---
+- name: Run core services
+  hosts: core_nw
+  become: true  # If root privileges are required
+  tasks:
+    - name: Start software in background
+      ansible.builtin.shell: |
+        open5gs-nrfd  -c  /home/vagrant/shared/core-open5gs/nrf.yaml  2>&1 &
+        open5gs-scpd  -c  /home/vagrant/shared/core-open5gs/scp.yaml  2>&1 &
+        open5gs-udmd  -c  /home/vagrant/shared/core-open5gs/udm.yaml  2>&1 &
+        open5gs-udrd  -c  /home/vagrant/shared/core-open5gs/udr.yaml  2>&1 &
+        open5gs-nssfd -c  /home/vagrant/shared/core-open5gs/nssf.yaml 2>&1 &
+        open5gs-pcfd  -c  /home/vagrant/shared/core-open5gs/pcf.yaml  2>&1 &
+        open5gs-bsfd  -c  /home/vagrant/shared/core-open5gs/bsf.yaml  2>&1 &
+        open5gs-ausfd -c  /home/vagrant/shared/core-open5gs/ausf.yaml 2>&1 &
+        open5gs-amfd  -c  /home/vagrant/shared/core-open5gs/amf.yaml  2>&1 &
+        open5gs-upfd  -c  /home/vagrant/shared/core-open5gs/upf.yaml  2>&1 &
+        open5gs-smfd  -c  /home/vagrant/shared/core-open5gs/smf.yaml  2>&1 &
+      args: {}
+      changed_when: true # Always report as changed
+      register: core_services # Register the output of the command
+      async: 5  # Asynchronous mode with a short wait
+      poll: 0   # Don't wait for task to complete
+
+    - name: Wait for OGS service to start
+      ansible.builtin.async_status:
+        jid: "{{ core_services.ansible_job_id }}"
+      register: job_result
+      until: job_result.finished
+      retries: 5  # Number of retries
+      delay: 5     # Delay between retries (in seconds)
+
+    - name: Check if OGS service started successfully
+      ansible.builtin.fail:
+        msg: "The OGS service did not start successfully."
+      when: job_result.failed
