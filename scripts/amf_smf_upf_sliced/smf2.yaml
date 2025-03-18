@@ -1,0 +1,56 @@
+logger:
+  file: /home/vagrant/shared/log/smf.log
+#  level: info   # fatal|error|warn|info(default)|debug|trace
+
+global:
+  max:
+    ue: 1024  # The number of UE can be increased depending on memory size.
+#    peer: 64
+
+smf:
+  sbi:
+    server:
+      - address: 127.0.0.30
+        port: 7778
+    client:
+#      nrf:
+#        - uri: http://127.0.0.10:7777
+      scp:
+        - uri: http://127.0.0.200:7777
+  pfcp:
+    server:
+      - address: 127.0.0.30
+    client:
+      upf:
+        - address: 127.0.0.23
+  info:
+    - s_nssai:
+        - sst: 2
+          dnn:
+            - internet
+  gtpc:
+    server:
+      - address: 127.0.0.30
+  gtpu:
+    server:
+      - address: 127.0.0.30
+  metrics:
+    server:
+#      - address: 192.168.56.100
+      - address: 192.168.57.3
+        port: 9094
+  session:
+    - subnet: 10.46.0.1/16
+#    - subnet: 2001:db8:bafe::1/48
+  dns:
+    - 8.8.8.8
+    - 8.8.4.4
+    - 2001:4860:4860::8888
+    - 2001:4860:4860::8844
+  mtu: 1400
+#  p-cscf:
+#    - 127.0.0.1
+#    - ::1
+#  ctf:
+#    enabled: auto   # auto(default)|yes|no
+  freeDiameter: /home/vagrant/open5gs/install/etc/freeDiameter/smf2.conf

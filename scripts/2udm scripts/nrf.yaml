@@ -1,0 +1,22 @@
+logger:
+  file: /home/vagrant/shared/log/nrf.log
+#  level: info   # fatal|error|warn|info(default)|debug|trace
+
+global:
+  max:
+    ue: 1024  # The number of UE can be increased depending on memory size.
+#    peer: 64
+
+nrf:
+  serving:  # 5G roaming requires PLMN in NRF
+    - plmn_id:
+        mcc: 999
+        mnc: 70
+  nf_register:
+    - service: udm
+      uri: http://127.0.0.50:7777  #Nginx address
+
+  sbi:
+    server:
+      - address: 127.0.0.10
+        port: 7777
