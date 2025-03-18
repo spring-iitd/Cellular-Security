@@ -1,0 +1,38 @@
+logger:
+  file: /home/vagrant/shared/log/udm2.log
+#  level: info   # fatal|error|warn|info(default)|debug|trace
+
+global:
+  max:
+    ue: 1024  # The number of UE can be increased depending on memory size.
+#    peer: 64
+
+udm:
+  hnet:
+    - id: 1
+      scheme: 1
+      key: /home/vagrant/open5gs/install/etc/open5gs/hnet/curve25519-1.key
+    - id: 2
+      scheme: 2
+      key: /home/vagrant/open5gs/install/etc/open5gs/hnet/secp256r1-2.key
+    - id: 3
+      scheme: 1
+      key: /home/vagrant/open5gs/install/etc/open5gs/hnet/curve25519-3.key
+    - id: 4
+      scheme: 2
+      key: /home/vagrant/open5gs/install/etc/open5gs/hnet/secp256r1-4.key
+    - id: 5
+      scheme: 1
+      key: /home/vagrant/open5gs/install/etc/open5gs/hnet/curve25519-5.key
+    - id: 6
+      scheme: 2
+      key: /home/vagrant/open5gs/install/etc/open5gs/hnet/secp256r1-6.key
+  sbi:
+    server:
+      - address: 127.0.0.73
+        port: 7778
+    client:
+      nrf:
+       - uri: http://127.0.0.10:7777
+      scp:
+        - uri: http://127.0.0.200:7777
