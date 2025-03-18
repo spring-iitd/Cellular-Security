@@ -1,0 +1,26 @@
+logger:
+  file: /home/vagrant/shared/log/upf.log
+#  level: info   # fatal|error|warn|info(default)|debug|trace
+
+global:
+  max:
+    ue: 1024  # The number of UE can be increased depending on memory size.
+#    peer: 64
+
+upf:
+  pfcp:
+    server:
+      - address: 127.0.0.7
+    client:
+#      smf:     #  UPF PFCP Client try to associate SMF PFCP Server
+#        - address: 127.0.0.4
+  gtpu:
+    server:
+      - address: 192.168.56.3
+  session:
+    - subnet: 10.45.0.1/16
+    - subnet: 2001:db8:cafe::1/48
+  metrics:
+    server:
+      - address: 192.168.56.3
+        port: 9095
