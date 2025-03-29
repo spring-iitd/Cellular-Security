@@ -26,46 +26,30 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-if [[ -z "$COMPONENT_NAME" ]]; then
-	echo "Error: COMPONENT_NAME environment variable not set"; exit 1;
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+export IP_ADDR=$(awk 'END{print $1}' /etc/hosts)
+export IF_NAME=$(ip r | awk '/default/ { print $5 }')
 
+# Remove ogstun and ogstun2 if they exist
+ip link delete ogstun
+ip link delete ogstun2
 
+python3 /mnt/upf/tun_if.py --tun_ifname ogstun --ipv4_range $UE_IPV4_INTERNET --ipv6_range 2001:230:cafe::/48
+python3 /mnt/upf/tun_if.py --tun_ifname ogstun2 --ipv4_range $UE_IPV4_IMS --ipv6_range 2001:230:babe::/48 --nat_rule 'no'
 
-elif [[ "$COMPONENT_NAME" =~ ^(ueransim-gnb[[:digit:]]*$) ]]; then
-	echo "Deploying componentsssss: '$COMPONENT_NAME'"
-	/mnt/ueransim/${COMPONENT_NAME}_init.sh && \
-	/UERANSIM/build/nr-gnb -c /UERANSIM/config/${COMPONENT_NAME}.yaml & \
-	bash
-	echo "finish componentss: '$COMPONENT_NAME'"
+UE_IPV4_INTERNET_TUN_IP=$(python3 /mnt/upf/ip_utils.py --ip_range $UE_IPV4_INTERNET)
+UE_IPV4_IMS_TUN_IP=$(python3 /mnt/upf/ip_utils.py --ip_range $UE_IPV4_IMS)
 
+cp /mnt/upf/upf.yaml install/etc/open5gs
+sed -i 's|UPF_IP|'$UPF_IP'|g' install/etc/open5gs/upf.yaml
+sed -i 's|SMF_IP|'$SMF_IP'|g' install/etc/open5gs/upf.yaml
+sed -i 's|UE_IPV4_INTERNET_TUN_IP|'$UE_IPV4_INTERNET_TUN_IP'|g' install/etc/open5gs/upf.yaml
+sed -i 's|UE_IPV4_INTERNET_SUBNET|'$UE_IPV4_INTERNET'|g' install/etc/open5gs/upf.yaml
+sed -i 's|UE_IPV4_IMS_TUN_IP|'$UE_IPV4_IMS_TUN_IP'|g' install/etc/open5gs/upf.yaml
+sed -i 's|UE_IPV4_IMS_SUBNET|'$UE_IPV4_IMS'|g' install/etc/open5gs/upf.yaml
+sed -i 's|UPF_ADVERTISE_IP|'$UPF_ADVERTISE_IP'|g' install/etc/open5gs/upf.yaml
+sed -i 's|MAX_NUM_UE|'$MAX_NUM_UE'|g' install/etc/open5gs/upf.yaml
 
-# elif [[ "$COMPONENT_NAME" =~ ^(ueransim-gnb[[:digit:]]*$) ]]; then
-# 	echo "Deploying componentsssssssssssss: '$COMPONENT_NAME'"
-# 	/mnt/ueransim/${COMPONENT_NAME}_init.sh && \
-# 	./nr-gnb -c ../config/${COMPONENT_NAME}.yaml & \
-# 	echo "finish componentssssssss: '$COMPONENT_NAME'"
-
-
-elif [[ "$COMPONENT_NAME" == "ueransim-ue" ]]; then
-	echo "Deploying component ueeeeeee: '$COMPONENT_NAME'"
-	/mnt/ueransim/${COMPONENT_NAME}_init.sh && \
-	/UERANSIM/build/nr-ue -c /UERANSIM/config/${COMPONENT_NAME}.yaml & \
-	bash 
-	echo "finishing ue1:'$COMPONENT_NAME'"
-
-
-
-elif [[ "$COMPONENT_NAME" == "ueransim-ue2" ]]; then
-	echo "Deploying component: '$COMPONENT_NAME'"
-	/mnt/ueransim/${COMPONENT_NAME}_init.sh && \
-	/UERANSIM/build/nr-ue -c /UERANSIM/config/${COMPONENT_NAME}.yaml & \
-	bash
-	echo "finishing ue2:'$COMPONENT_NAME'"
-
-
-	
-else
-	echo "Error: Invalid component name: '$COMPONENT_NAME'"
-fi
-
-# hello
+# Sync docker time
+#ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

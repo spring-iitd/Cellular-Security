@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # BSD 2-Clause License
 
 # Copyright (c) 2020, Supreeth Herle
@@ -26,19 +24,47 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-export IP_ADDR=$(awk 'END{print $1}' /etc/hosts)
+import click
+import sys
+import ipaddress
 
-cp /mnt/ueransim/${COMPONENT_NAME}.yaml /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|MNC|'$MNC'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|MCC|'$MCC'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+"""
+Script used to fetch first IP address in a given IP range. i.e. the calling bash script reads the std output
 
-sed -i 's|UE2_KI|'$UE2_KI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|UE2_OP|'$UE2_OP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|UE2_AMF|'$UE2_AMF'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|UE2_IMEISV|'$UE2_IMEISV'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|UE2_IMEI|'$UE2_IMEI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|UE2_IMSI|'$UE2_IMSI'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
-sed -i 's|NR_GNB_IP|'$NR_GNB_IP'|g' /UERANSIM/config/${COMPONENT_NAME}.yaml
+Usage in command line:
+e.g:
+$ python3 ip_utils.py --ip_range 192.168.100.0/24
+$ python3 ip_utils.py --ip_range 2001:230:cafe::/48
+"""
 
-# Sync docker time
-#ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+def validate_ip_net(ctx, param, value):
+    try:
+        ip_net = ipaddress.ip_network(value)
+        return ip_net
+    except ValueError:
+        raise click.BadParameter(
+            'Value does not represent a valid IPv4/IPv6 range')
+
+
+@click.command()
+@click.option('--ip_range',
+              required=True,
+              callback=validate_ip_net,
+              help='UE IPv4/IPv6 Address range in CIDR format e.g. 192.168.100.0/24 or 2001:230:cafe::/48')
+def start(ip_range):
+
+    # Get the first IP address in the IP range and netmask prefix length
+    first_ip_addr = next(ip_range.hosts(), None)
+    if not first_ip_addr:
+        raise ValueError('Invalid UE IPv4 range. Only one IP given')
+    else:
+        first_ip_addr = first_ip_addr.exploded
+        print(str(first_ip_addr))
+
+if __name__ == '__main__':
+    try:
+        start()
+        sys.exit(0)
+    except ValueError:
+        sys.exit(1)
