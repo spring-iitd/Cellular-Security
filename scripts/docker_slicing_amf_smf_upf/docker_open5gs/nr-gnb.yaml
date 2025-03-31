@@ -1,0 +1,34 @@
+services:
+  
+  nr_gnb:
+    image:  my_ueransim:0.0.1
+    
+    container_name: nr_gnb
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./my_dockerfiles/ueransim:/mnt/ueransim
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      - COMPONENT_NAME=ueransim-gnb
+    expose:
+      - "38412/sctp"
+      - "38413/sctp"
+      - "2152/udp"
+      - "2153/udp"
+
+      - "4997/udp"
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    networks:
+      default:
+        ipv4_address: ${NR_GNB_IP}
+networks:
+  default:
+    external:
+      name: docker_open5gs_default

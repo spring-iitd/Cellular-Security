@@ -1,0 +1,56 @@
+logger:
+    file:
+      path: /open5gs/install/var/log/open5gs/smf.log
+
+sbi:
+    server:
+      no_tls: true
+    client:
+      no_tls: true
+
+global:
+  max:
+    ue: MAX_NUM_UE
+  parameter:
+      no_ipv4v6_local_addr_in_packet_filter: true
+
+smf:
+    freeDiameter: /open5gs/install/etc/freeDiameter/smf.conf
+    gtpc:
+      server:
+        - address: SMF_IP
+    gtpu:
+      server:
+        - address: SMF_IP
+    pfcp:
+      server:
+        - address: SMF_IP
+      client:
+        upf:
+          - address: UPF_IP
+    session:
+      - subnet: UE_IPV4_INTERNET_SUBNET
+        gateway: UE_IPV4_INTERNET_TUN_IP
+        dnn: internet
+      - subnet: 2001:230:cafe::/48
+        gateway: 2001:230:cafe::1
+        dnn: internet
+      - subnet: UE_IPV4_IMS_SUBNET
+        gateway: UE_IPV4_IMS_TUN_IP
+        dnn: ims
+      - subnet: 2001:230:babe::/48
+        gateway: 2001:230:babe::1
+        dnn: ims
+    dns:
+      - SMF_DNS1
+      - SMF_DNS2
+      - 2001:4860:4860::8888
+      - 2001:4860:4860::8844
+    p-cscf:
+      - PCSCF_IP
+    mtu: 1450
+    metrics:
+      server:
+        - address: SMF_IP
+          port: 9091
+
