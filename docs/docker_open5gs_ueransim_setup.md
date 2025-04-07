@@ -118,7 +118,7 @@ Now, the docker services are successfully setup on your IITD machine. Let's set 
 
 ```sh
 cd ~/Desktop/
-git clone https://github.com/spring-iitd/5G-Registration-Attack.git
+git clone https://github.com/herlesupreeth/docker_open5gs.git
 ```
 
 2. Move into the appropriate folder, pull the base images, tag them with simpler image names and verify your modifications using the following commands:
@@ -264,7 +264,8 @@ If the issue still persists, manually remove any other service that might be blo
 
 ```sh
 sudo lsof -i :9090
-sudo pkill -9 <process ID> <process name>
+sudo pkill -9 <process name>
+sudo kill -9 <process ID>
 ```
 
 - <u>**Bug-2:**</u> If you recieve a **Connection timer expired error**, while running core network services, such as the one shown below:
