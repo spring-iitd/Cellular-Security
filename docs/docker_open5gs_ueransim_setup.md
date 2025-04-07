@@ -295,7 +295,14 @@ Simply open the `sa-deploy.yaml` file and add the `no_proxy` variable, explicitl
 ...
 environment:
       - COMPONENT_NAME=nrf
-      - no_proxy="172.*.*.*"
+      - http_proxy=
+      - https_proxy=
+      - ftp_proxy=
+      - no_proxy=
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - FTP_PROXY=
+      - NO_PROXY=
 ...
 ```
 
