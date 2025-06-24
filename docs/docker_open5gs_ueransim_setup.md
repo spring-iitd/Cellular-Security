@@ -14,7 +14,7 @@ This guide provides detailed instructions for setting up `Open5gs` services and 
 sudo -E apt-get update && sudo -E apt-get upgrade
 sudo -E apt-get install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
-sudo -E curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo -E curl -fsSL -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
@@ -22,6 +22,8 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo -E apt-get update
 ```
+
+- <u>_Note:_</u> The URL's used in the above commands are subjected to change. You can find the latest commands [here](https://docs.docker.com/engine/install/ubuntu/). When using commands from Docker’s official documentation, ensure that you preserve environment variables by using the `-E` flag.
 
 2. Install Docker packages on your system and verify installation as:
 
